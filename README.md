@@ -14,7 +14,7 @@ you can access your disc in several ways:
 - with the UX on web (see live demo)
 - with the API just like another web link (comming son)
 - from your own UX with javascript class
-- from another contract with solidity librairy (comming son)
+- from another contract with solidity libraries (comming son)
 
 ## Install
 
