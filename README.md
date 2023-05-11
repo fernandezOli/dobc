@@ -8,6 +8,14 @@ Try running some of the following tasks:
 [https://idds.netlify.app/](https://idds.netlify.app/)
 
 
+## Disk access 
+
+you can access your disc in several ways:
+- with the UX on web (see live demo)
+- with the API just like another web link (comming son)
+- from your own UX with javascript class
+- from another contract with solidity librairy (comming son)
+
 ## Install
 
 ```shell
@@ -28,14 +36,14 @@ Create a `.env` file with your own keys and:
 npm start
 ```
 
-### Install with web IDDS
+### Install for web disk
 
-You can install the explorer local and use the blockchain. Just run change nothing.
+You can install the explorer local and use a disk on blockchain. Just run change nothing.
 The explorer use default configuration on network XXX.
 
 Create a `.env` file with your own keys for filecoin
 
-### Install with localy IDDS
+### Install for local disk
 
 Deploy the contracts (see deploy for more info)
 Change network to Ganache in **config.js**
@@ -55,7 +63,7 @@ Create a `.env` file with your own keys for filecoin
 ```shell
 npx hardhat run scripts/deploy.js --network localhost
 ```
-> :warning Don't forget to copy your registry address in the explorer
+> warning Don't forget to copy your registry address in the explorer
 
 ### Manual deploy
 
@@ -65,7 +73,7 @@ npx hardhat run scripts/deploy.js --network localhost
 
 > :warning Don't forget to copy your registry address in the explorer
 
-## Update
+## Update contract disk code
 
 If you want to update the disk contract, deploy the new contract disk and set this new address in the registry.
 
