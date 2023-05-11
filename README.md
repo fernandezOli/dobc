@@ -63,7 +63,7 @@ Create a `.env` file with your own keys for filecoin
 ```shell
 npx hardhat run scripts/deploy.js --network localhost
 ```
-> warning Don't forget to copy your registry address in the explorer
+> :warning: Don't forget to copy your registry address in the explorer
 
 ### Manual deploy
 
@@ -71,13 +71,17 @@ npx hardhat run scripts/deploy.js --network localhost
 - deploy registry contract
 - set the address of disk contract to the registry adddress with setDiskContractAddress(<disk_address>)
 
-> :warning Don't forget to copy your registry address in the explorer
+>[!WARNING] Don't forget to copy your registry address in the explorer
 
 ## Update contract disk code
 
 If you want to update the disk contract, deploy the new contract disk and set this new address in the registry.
 
-> :warning the new code will only be active for the new disk created, the existing disks will keep the old code.
+> **Warning** the new code will only be active for the new disk created, the existing disks will keep the old code.
+
+|**Warning** the new code will only be active|
+| --- |
+
 
 ## Changelog
 
