@@ -1,0 +1,28 @@
+{
+  "us": [
+    {
+      "title": "Immutable Decentralized Disk Storage",
+      "text": "<br>The most easy way to store any files on web3.<br><br>Use it like a hard disk.<br><br>Uploading file on web3 storage has never been easier."
+    },
+    {
+      "title": "Why using web3 storage",
+      "text": "<br>Fear of losing your data ?<br><br>Worried about the ravages a hacker can make by encrypting your data to make them inaccessible ?<br><br>With a disk on the blockchain no more risk !"
+    },
+    {
+      "title": "Write Once",
+      "text": "<br>The blockchain is immutable (no data can be erase), so your disk is on Write Once mode.<br><br>You <b>CANNOT</b> rename ou delete file or folder, and you <b>CANNOT</b> modify a file."
+    },
+    {
+      "title": "Read by anyone",
+      "text": "<br>Remember that anyone can read your data. Only save the data that you want to share and have rights to."
+    },
+    {
+      "title": "Storage",
+      "text": "<br>The content of file can be storage on blockchain or ipfs.<br><br>For Files with a size of less than 1000 bytes, storage on blockchain is recommended.<br><br>The files with size more than 16000 bytes must be storage on ipfs.<br><br>For other sizes, you can save on blockchain or ipfs."
+    },
+    {
+      "title": "Let's go",
+      "text": "<br>Just clic on 'Demo' button for create or use your own disk."
+    }
+  ]
+}

@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Immutable Decentralized Disk Storage
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A decentralized storage solution based on Blockchain and ipfs, for security, preservation and online identification.
 
-## Available Scripts
+Try running some of the following tasks:
 
-In the project directory, you can run:
+## Live demo
+[https://idds.netlify.app/](https://idds.netlify.app/)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Install
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```shell
+npm i
+```
 
-### `npm test`
+## Test
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```shell
+npx hardhat test
+```
 
-### `npm run build`
+## Run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a `.env` file with your own keys and:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Install with web IDDS
 
-### `npm run eject`
+You can install the explorer local and use the blockchain. Just run change nothing.
+The explorer use default configuration on network XXX.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Create a `.env` file with your own keys for filecoin
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Install with localy IDDS
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Deploy the contracts (see deploy for more info)
+Change network to Ganache in **config.js**
+```
+export const ETH_CHAINS = [localhost];
+export const NETWORK_ID_SYMBOL = "GETH";
+export const REGISTRY_ADDR = '0x2008b69Ee0A6099e6cE461a7fe5c8a9972E2a965';
+export let REGISTRY_ADDR = '<registry_address_on_ganache>';
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Create a `.env` file with your own keys for filecoin
 
-## Learn More
+## Deploy
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Auto deploy
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+npx hardhat run scripts/deploy.js --network localhost
+```
+> :warning Don't forget to copy your registry address in the explorer
 
-### Code Splitting
+### Manual deploy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- deploy disk contract
+- deploy registry contract
+- set the address of disk contract to the registry adddress with setDiskContractAddress(<disk_address>)
 
-### Analyzing the Bundle Size
+> :warning Don't forget to copy your registry address in the explorer
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Update
 
-### Making a Progressive Web App
+If you want to update the disk contract, deploy the new contract disk and set this new address in the registry.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> :warning the new code will only be active for the new disk created, the existing disks will keep the old code.
 
-### Advanced Configuration
+## Changelog
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### v0.1.0
 
-### Deployment
+    Initial version
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Support
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You can contact me via [linkedin](https://www.linkedin.com/in/olivier-fernandez-95ba90218/)
