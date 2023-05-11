@@ -67,8 +67,9 @@ Create a `.env` file with your own keys for filecoin
 ```shell
 npx hardhat run scripts/deploy.js --network localhost
 ```
-!!! info "Contracts Addresses"
+```info
 	the disk and registry address are save in src/config.
+```
 
 ### Manual deploy
 
