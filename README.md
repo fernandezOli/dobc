@@ -4,6 +4,7 @@ A decentralized storage solution based on Blockchain and ipfs, for security, pre
 
 Try running some of the following tasks:
 
+
 ## Live demo
 [https://dobc.netlify.app/](https://dobs.netlify.app/)
 
@@ -15,6 +16,7 @@ you can access your disc in several ways:
 - with the API just like another web link (comming son)
 - from your own UX with javascript class
 - from another contract with solidity libraries (comming son)
+
 
 ## Install
 
@@ -36,6 +38,7 @@ Create a `.env` file with your own keys and:
 npm start
 ```
 
+
 ### Install for web disk
 
 You can install the explorer local and use a disk on blockchain. Just run change nothing.
@@ -56,6 +59,7 @@ export let REGISTRY_ADDR = '<registry_address_on_ganache>';
 
 Create a `.env` file with your own keys for filecoin
 
+
 ## Deploy
 
 ### Auto deploy
@@ -63,8 +67,8 @@ Create a `.env` file with your own keys for filecoin
 ```shell
 npx hardhat run scripts/deploy.js --network localhost
 ```
-	| :note: the disk and registry address are save in src/config. |
-	| --- |
+!!! info "Contracts Addresses"
+	the disk and registry address are save in src/config.
 
 ### Manual deploy
 
@@ -75,6 +79,7 @@ npx hardhat run scripts/deploy.js --network localhost
 | :warning: Don't forget to copy your registry address in the explorer ! |
 | --- |
 
+
 ## Update contract disk code
 
 If you want to update the disk contract, deploy the new contract disk and set this new address in the registry.
@@ -82,11 +87,13 @@ If you want to update the disk contract, deploy the new contract disk and set th
 | :warning: the new code will only be active for the new disk created, the existing disks will keep the old code. |
 | --- |
 
+
 ## Changelog
 
 ### v0.1.0
 
     Initial version
+
 
 ## Support
 
