@@ -5,7 +5,7 @@ A decentralized storage solution based on Blockchain and ipfs, for security, pre
 Try running some of the following tasks:
 
 ## Live demo
-[https://idds.netlify.app/](https://idds.netlify.app/)
+[https://dobc.netlify.app/](https://dobs.netlify.app/)
 
 
 ## Disk access 
@@ -63,8 +63,8 @@ Create a `.env` file with your own keys for filecoin
 ```shell
 npx hardhat run scripts/deploy.js --network localhost
 ```
-| **Note**: the disk and registry address are save in src/config. |
-| --- |
+	| Nb: the disk and registry address are save in src/config. |
+	| --- |
 
 ### Manual deploy
 
