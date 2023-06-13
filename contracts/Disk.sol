@@ -248,6 +248,7 @@ contract Disk is Ownable {
 	/// @notice save the content data of file
 	/// @param _path the path of the file
 	/// @param _name the name of the file
+	/// @param _attributs attributs of the file in JSON format
 	/// @param _content_type must be 0 (binary data), 1 (url string) or 2 (ipfs string)
 	/// @param _data the data of the file to save
 	function createFile(string calldata _path, string calldata _name, string calldata _attributs, uint32 _content_type, bytes calldata _data) isPathExist(_path) isValidName(_name) public onlyOwner {
