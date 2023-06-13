@@ -1,11 +1,18 @@
 /* configuration file */
-import { localhost } from '@wagmi/chains'; //gnosis, gnosisChiado
-import { localhost_REGISTRY_ADDR } from './localhost_RegistryAddress';
+import { /*localhost,*/ goerli } from '@wagmi/chains'; //gnosis, gnosisChiado
+//import { localhost_REGISTRY_ADDR } from './localhost_RegistryAddress';
+import { goerli_REGISTRY_ADDR } from './goerli_RegistryAddress';
 
 /* network */
-export const ETH_CHAINS = [localhost];
-export const NETWORK_ID_SYMBOL = "GETH";
-export const REGISTRY_ADDR = localhost_REGISTRY_ADDR;
+/* Ganache localhost */
+//export const ETH_CHAINS = [localhost];
+//export const NETWORK_ID_SYMBOL = "GETH";
+//export const REGISTRY_ADDR = localhost_REGISTRY_ADDR;
+
+/* Goerli localhost */
+export const ETH_CHAINS = [goerli];
+export const NETWORK_ID_SYMBOL = "ETH";
+export const REGISTRY_ADDR = goerli_REGISTRY_ADDR;
 
 /*
 CHECK_PX_GAS = N

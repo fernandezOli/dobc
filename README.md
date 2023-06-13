@@ -2,7 +2,6 @@
 
 A decentralized storage solution based on Blockchain and ipfs, for security, data preservation and online identification.
 
-
 ## Live demo
 [https://dobc.netlify.app/](https://dobc.netlify.app/) (comming son)
 
@@ -39,26 +38,37 @@ npm start
 
 ### Install for web disk
 
-You can install the explorer local and use a disk on blockchain. Just run change nothing.
-The explorer use default configuration on network XXX.
+You can install the explorer local and use a disk on blockchain. Just run, change nothing.
+The explorer use default configuration on network goerli.
+**config/config.js**
+```
+export const ETH_CHAINS = [goerli];
+export const NETWORK_ID_SYMBOL = "ETH";
+export const REGISTRY_ADDR = '0x57399e219E57866e8B106e6cBd8af3b36CB86420';
+```
 
 Create a `.env` file with your own keys for filecoin
 
 ### Install for local disk
 
 Deploy the contracts (see deploy for more info)
-Change network to Ganache in **config.js**
+
+Change network to Ganache in **config/config.js**
 ```
 export const ETH_CHAINS = [localhost];
 export const NETWORK_ID_SYMBOL = "GETH";
-export const REGISTRY_ADDR = '0x2008b69Ee0A6099e6cE461a7fe5c8a9972E2a965';
-export let REGISTRY_ADDR = '<registry_address_on_ganache>';
+export const REGISTRY_ADDR = '<registry_address_on_ganache>';
 ```
 
 Create a `.env` file with your own keys for filecoin
 
 
 ## Deploy
+
+### Goerli Testnet
+
+Disk: 0x0717EFFC74974f5a63C58923CE7C9f29cA914C2a
+DiskRegistry: 0x57399e219E57866e8B106e6cBd8af3b36CB86420
 
 ### Auto deploy
 
