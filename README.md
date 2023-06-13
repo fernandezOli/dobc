@@ -1,12 +1,12 @@
-# Immutable Decentralized Disk Storage
+# Decentralized On Blockchain Disk
 
-A decentralized storage solution based on Blockchain and ipfs, for security, preservation and online identification.
+A decentralized storage solution based on Blockchain and ipfs, for security, data preservation and online identification.
 
 Try running some of the following tasks:
 
 
 ## Live demo
-[https://dobc.netlify.app/](https://dobs.netlify.app/)
+[https://dobc.netlify.app/](https://dobc.netlify.app/)
 
 
 ## Disk access 
@@ -14,7 +14,7 @@ Try running some of the following tasks:
 you can access your disc in several ways:
 - with the UX on web (see live demo)
 - with the API just like another web link (comming son)
-- from your own UX with javascript class
+- from your own UX with javascript class (comming son)
 - from another contract with solidity libraries (comming son)
 
 
