@@ -41,6 +41,32 @@ describe("**** DiskRegistry ****", function () {
     });
   });
 
+  describe("Tests import/export", function () {
+    it("import", async function () {
+      await DiskRegistry.importDisk(olivier.address,"0xDc0d5F423B74dB6BbC9Ec465E40cd4077eD4D058");
+      expect(await DiskRegistry.diskExist(olivier.address)).to.equal(true);
+    });
+
+    it("export", async function () {
+      await DiskRegistry.importDisk(olivier.address,"0xDc0d5F423B74dB6BbC9Ec465E40cd4077eD4D058");
+      let diskList = await DiskRegistry.exportDiskList();
+      console.log("diskList: ", diskList);
+    });
+  });
+
+  describe("Tests change ownership", function () {
+    it("change ownership", async function () {
+      expect(await DiskRegistry.diskExist(owner.address)).to.equal(false);
+      await DiskRegistry.setDiskContractAddress(Disk.address);
+      await DiskRegistry.diskCreate();
+      expect(await DiskRegistry.diskExist(owner.address)).to.equal(true);
+
+      await DiskRegistry.changeDiskOwnership(owner.address, olivier.address);
+      expect(await DiskRegistry.diskExist(owner.address)).to.equal(false);
+      expect(await DiskRegistry.diskExist(olivier.address)).to.equal(true);
+    });
+  });
+
   describe("Tests unitaires Write", function () {
     it("diskCreate", async function () {
       //await expect(DiskRegistry.diskCreate()).to.be.revertedWith("No Bytecode");
