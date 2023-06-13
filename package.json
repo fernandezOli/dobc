@@ -1,9 +1,9 @@
 {
   "name": "dobc",
   "version": "0.1.0",
-  "description": "dobc.",
+  "description": "disk on blockchain.",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",

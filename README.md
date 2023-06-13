@@ -1,12 +1,10 @@
-# Decentralized On Blockchain Disk
+# Disk On BlockChain
 
 A decentralized storage solution based on Blockchain and ipfs, for security, data preservation and online identification.
 
-Try running some of the following tasks:
-
 
 ## Live demo
-[https://dobc.netlify.app/](https://dobc.netlify.app/)
+[https://dobc.netlify.app/](https://dobc.netlify.app/) (comming son)
 
 
 ## Disk access 
