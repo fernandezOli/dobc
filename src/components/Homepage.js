@@ -142,6 +142,87 @@ const Homepage = () => {
         </div>
       </div>
 
+      <div className="Homepage-div-title Homepage-detail-title">
+        <div style={{ backgroundColor: "aqua" }}>
+          Data Access
+        </div>
+        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px"}}>
+          <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
+            <div>Explorer</div>
+            <div className="Homepage-detail-text-four">With the Explorer, you can access to your data.</div>
+          </div>
+          <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
+            <div>API</div>
+            <div className="Homepage-detail-text-four">With the API, you can access to the data directly just like any other web link.
+            You can use it for js, css, pictures, video, ...</div>
+            <div className="Homepage-detail-text-four">(comming soon)</div>
+          </div>
+          <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
+            <div>Classes</div>
+            <div className="Homepage-detail-text-four">With the javascript classes, you can access to your disk from your own UI.</div>
+            <div className="Homepage-detail-text-four">(comming soon)</div>
+          </div>
+          <div className="Homepage-detail-four">
+            <div>Library</div>
+            <div className="Homepage-detail-text-four">With the solidity librairies, you can access to your disk from your own contract.</div>
+            <div className="Homepage-detail-text-four">(comming soon)</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="Homepage-div-title Homepage-detail-title">
+        <div style={{backgroundColor: "aquamarine"}}>
+          Use Cases
+        </div>
+        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
+          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+            <div className="Homepage-detail-text-four"><b>Web2 to Web3</b></div>
+            <div className="Homepage-detail-text-four">
+            (web galerie) Avant, il fallait ouvrir un acces ftp a vos utilisateurs pour qu'ils upload leur images, video, texte ou autre.
+Et cet acces pouvait etre une source de piratage, d'ou la necessité de faire les mises à jour.<br/>
+Il etait aussi de votre responsabilité de gérer les mot de passe et donc de vous conformer a la loi en vigueur dans chaque pays.<br/>
+Vous deviez creer un acces a votre disque pour vos utilisateurs afin qu'il puisse uploader leurs fichiers.<br/>
+<br/>
+<u>Il vous fallait :</u><br/>
+- un serveur pour votre site web<br/>
+- acces a votre disque par page html d'upload, ftp, ...<br/>
+- gros disque sécurisé pour le stokage de tous les fichiers de tous vos utilisateurs.<br/>
+- base de données utilisateurs (user/password)<br/>
+- access management (ajout, suppression d'utilisateur, ...) et popup de login avec password lost.<br/>
+<br/>
+<br/>
+Avec le Web3, <b>oubliez tout cela</b>.<br/>
+Vos utilisateurs ouvrent leur disque auquel seul eux peuvent avoir acces.<br/>
+Il vous donne l'adresse de leur disque ainsi le dossier des fichiers.<br/>
+Vous n'avez plus qu'a lire le dossier pour obtenir les liens ipfs et les afficher (like before)<br/><br/>
+<u>Il vous faut :</u><br/>
+- un serveur pour votre site web.<br/>
+- ajouter les classes javascript a votre site web.<br/>
+<b>Et c'est tout.</b><br/>
+<br/>
+- les utilisateurs n'ont plus acces a votre disque<br/>
+- no access management (user/password) : l'acces se fait par le wallet de l'utilisateur sur son propre disk on chain.<br/>
+- no disk (les données sont sur leur disque on chain et ipfs)<br/>
+<br/>
+<b>More secure, less work !</b><br/><br/></div>
+          </div>
+        </div>
+
+      <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "0px"}}>
+          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+            <div className="Homepage-detail-text-four"><b>Access from contract</b></div>
+            <div className="Homepage-detail-text-four">
+            Ajouter les librairies solidity a votre DAO.<br/>
+            Creez un disque puis changez l'ownership par l'adresse de votre DAO. Votre DAO sera alors le seul a pouvoir ecrire sur le disque.<br/>
+            Creez les dossiers que vous désirez depuis votre DAO.<br/>
+            Télécharger sur ipfs les fichiers que vous voulez ajouter à votre disque.<br/>
+            Creez le lien ipfs du fichier sur votre disque depuis votre DAO.<br/><br/>
+            Tout ajout (creation de dossier, ajout de lien ipfs) sera lié a un vote.<br/>
+            </div>
+          </div>
+      </div>
+    </div>
+
       <div id="footer" className="Homepage" style={{paddingBottom: "50px"}}>
         <button className="App-button Homepage-button" style={{marginRight: "25px"}} onClick={() => loadExplorer()}>Try the Demo</button>
       </div>
