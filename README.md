@@ -96,6 +96,14 @@ If you want to update the disk contract, deploy the new contract disk and set th
 | --- |
 
 
+## Technologies use
+
+    - wagmi
+    - connectkit
+    - react-accessible-treeview
+    - react-icons
+
+
 ## Changelog
 
 ### v0.1.0

@@ -146,6 +146,7 @@ const Homepage = () => {
         <div style={{ backgroundColor: "aqua" }}>
           Data Access
         </div>
+
         <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px"}}>
           <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
             <div>Explorer</div>
@@ -159,12 +160,12 @@ const Homepage = () => {
           </div>
           <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
             <div>Classes</div>
-            <div className="Homepage-detail-text-four">With the javascript classes, you can access to your disk from your own UI.</div>
+            <div className="Homepage-detail-text-four">With the javascript classes, you can access to your disk on chain from your own UI.</div>
             <div className="Homepage-detail-text-four">(comming soon)</div>
           </div>
           <div className="Homepage-detail-four">
             <div>Library</div>
-            <div className="Homepage-detail-text-four">With the solidity librairies, you can access to your disk from your own contract.</div>
+            <div className="Homepage-detail-text-four">With the solidity librairies, you can access to your disk on chain from your own contract.</div>
             <div className="Homepage-detail-text-four">(comming soon)</div>
           </div>
         </div>
@@ -174,27 +175,57 @@ const Homepage = () => {
         <div style={{backgroundColor: "aquamarine"}}>
           Use Cases
         </div>
+
+        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
+          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+            <div className="Homepage-detail-text-four"><b>Personnal</b></div>
+            <div className="Homepage-detail-text-four">
+            stockez des documents de tous types.<br/>
+            - Creez les dossiers que vous désirez pour organiser vos fichiers.<br/>
+            - Téléchargez sur ipfs, par l'explorateur, les fichiers que vous voulez ajouter à votre disque.<br/>
+            - Creez un lien ipfs sur un fichier déjà existant sur ipfs.<br/><br/>
+            N'oubliez pas que votre disque est accessible a tous. N'importe qui peut lire votre disque.<br/>
+            <b>Attention:</b> ne mettez pas de documents personnel comme votre carte d'identité ou votre passport.<br/>
+            </div>
+          </div>
+        </div>
+
+        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
+          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+            <div className="Homepage-detail-text-four"><b>Company</b></div>
+            <div className="Homepage-detail-text-four">
+            stockez des documents de tous types.<br/>
+            - Creez les dossiers que vous désirez pour organiser vos fichiers.<br/>
+            - Téléchargez sur ipfs, par l'explorateur, les fichiers que vous voulez ajouter à votre disque : images, videos, documentations, ....<br/>
+            - Creez un lien ipfs sur un fichier déjà existant sur ipfs.<br/><br/>
+            Toute personne pourra acceder à vos documents <b>indéfiniment</b>.<br/>
+            <b>Attention:</b> ne mettez pas de documents interne à l'entreprise.<br/>
+            </div>
+          </div>
+        </div>
+
         <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
           <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
             <div className="Homepage-detail-text-four"><b>Web2 to Web3</b></div>
             <div className="Homepage-detail-text-four">
-            (web galerie) Avant, il fallait ouvrir un acces ftp a vos utilisateurs pour qu'ils upload leur images, video, texte ou autre.
-Et cet acces pouvait etre une source de piratage, d'ou la necessité de faire les mises à jour.<br/>
+            (web galerie) Avant, il fallait ouvrir un acces ftp ou une page web d'upload a vos utilisateurs pour qu'ils puissent
+            mettre leurs images, videos, textes ou autre sur votre serveur. Ainsi qu'une page de login avec une fonction "password lost".<br/>
+Cet acces pouvait etre une source de piratage, d'ou la necessité de faire des mises à jour, surveiller les attaques, ...<br/>
 Il etait aussi de votre responsabilité de gérer les mot de passe et donc de vous conformer a la loi en vigueur dans chaque pays.<br/>
-Vous deviez creer un acces a votre disque pour vos utilisateurs afin qu'il puisse uploader leurs fichiers.<br/>
+Vous deviez posséder de gros disques sécurisés pour le stokage de tous les fichiers de tous vos utilisateurs.<br/>
 <br/>
 <u>Il vous fallait :</u><br/>
 - un serveur pour votre site web<br/>
-- acces a votre disque par page html d'upload, ftp, ...<br/>
+- un acces a votre disque par page d'upload, ftp, ...<br/>
 - gros disque sécurisé pour le stokage de tous les fichiers de tous vos utilisateurs.<br/>
 - base de données utilisateurs (user/password)<br/>
-- access management (ajout, suppression d'utilisateur, ...) et popup de login avec password lost.<br/>
+- access management (ajout, suppression d'utilisateur, ...).<br/>
 <br/>
 <br/>
 Avec le Web3, <b>oubliez tout cela</b>.<br/>
 Vos utilisateurs ouvrent leur disque auquel seul eux peuvent avoir acces.<br/>
 Il vous donne l'adresse de leur disque ainsi le dossier des fichiers.<br/>
-Vous n'avez plus qu'a lire le dossier pour obtenir les liens ipfs et les afficher (like before)<br/><br/>
+Vous n'avez plus qu'a lire le dossier pour obtenir les liens ipfs et les afficher.<br/><br/>
 <u>Il vous faut :</u><br/>
 - un serveur pour votre site web.<br/>
 - ajouter les classes javascript a votre site web.<br/>
@@ -210,14 +241,15 @@ Vous n'avez plus qu'a lire le dossier pour obtenir les liens ipfs et les affiche
 
       <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "0px"}}>
           <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
-            <div className="Homepage-detail-text-four"><b>Access from contract</b></div>
+            <div className="Homepage-detail-text-four"><b>With contract</b></div>
             <div className="Homepage-detail-text-four">
-            Ajouter les librairies solidity a votre DAO.<br/>
-            Creez un disque puis changez l'ownership par l'adresse de votre DAO. Votre DAO sera alors le seul a pouvoir ecrire sur le disque.<br/>
-            Creez les dossiers que vous désirez depuis votre DAO.<br/>
-            Télécharger sur ipfs les fichiers que vous voulez ajouter à votre disque.<br/>
-            Creez le lien ipfs du fichier sur votre disque depuis votre DAO.<br/><br/>
-            Tout ajout (creation de dossier, ajout de lien ipfs) sera lié a un vote.<br/>
+            - Ajouter les librairies solidity a votre DAO.<br/>
+            - Creez un disque puis changez l'ownership par l'adresse de votre DAO, votre DAO sera alors le seul a pouvoir ecrire sur le disque.<br/>
+            - Creez le dossier que vous désirez depuis votre DAO via une proposition.<br/>
+            - Télécharger sur ipfs le fichier que vous voulez ajouter à votre disque puis creez une proposition d'ajout du lien ipfs au disque.<br/>
+            - Votez l'ajout du dossier ou du lien ipfs depuis votre DAO.<br/>
+            - Executez la fonction d'ajout du dossier ou du lien ipfs sur le disque depuis votre DAO.<br/><br/>
+            Tout écriture sur le disque (creation de dossier ou ajout de lien ipfs) est lié a un vote.<br/><br/>
             </div>
           </div>
       </div>
