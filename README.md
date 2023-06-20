@@ -101,7 +101,6 @@ If you want to update the disk contract, deploy the new contract disk and set th
     - wagmi
     - connectkit
     - react-accessible-treeview
-    - react-icons
 
 
 ## Changelog
@@ -109,6 +108,11 @@ If you want to update the disk contract, deploy the new contract disk and set th
 ### v0.1.0
 
     Initial version
+
+
+## License
+
+MIT license (http://opensource.org/licenses/MIT)
 
 
 ## Support

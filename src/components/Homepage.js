@@ -147,7 +147,8 @@ const Homepage = () => {
           Data Access
         </div>
 
-        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px"}}>
+        <div className="Homepage-detail" style={{paddingLeft: "0px", marginTop: "10px"}}>
+
           <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
             <div>Explorer</div>
             <div className="Homepage-detail-text-four">With the Explorer, you can access to your data.</div>
@@ -156,18 +157,25 @@ const Homepage = () => {
             <div>API</div>
             <div className="Homepage-detail-text-four">With the API, you can access to the data directly just like any other web link.
             You can use it for js, css, pictures, video, ...</div>
-            <div className="Homepage-detail-text-four">(comming soon)</div>
+            <div className="Homepage-detail-text-four" style={{ alignItems: "end", display: "flex", height: "100%", marginBottom: "20px" }}>
+              <span style={{ width: "100%", marginRight: "20px", textAlign: "right" }}>(comming soon)</span>
+            </div>
           </div>
           <div className="Homepage-detail-four" style={{ marginRight: "10px" }}>
             <div>Classes</div>
             <div className="Homepage-detail-text-four">With the javascript classes, you can access to your disk on chain from your own UI.</div>
-            <div className="Homepage-detail-text-four">(comming soon)</div>
+            <div className="Homepage-detail-text-four" style={{ alignItems: "end", display: "flex", height: "100%", marginBottom: "20px" }}>
+              <span style={{ width: "100%", marginRight: "20px", textAlign: "right" }}>(comming soon)</span>
+            </div>
           </div>
           <div className="Homepage-detail-four">
             <div>Library</div>
             <div className="Homepage-detail-text-four">With the solidity librairies, you can access to your disk on chain from your own contract.</div>
-            <div className="Homepage-detail-text-four">(comming soon)</div>
+            <div className="Homepage-detail-text-four" style={{ alignItems: "end", display: "flex", height: "100%", marginBottom: "20px" }}>
+              <span style={{ width: "100%", marginRight: "20px", textAlign: "right" }}>(comming soon)</span>
+            </div>
           </div>
+
         </div>
       </div>
 
@@ -176,22 +184,21 @@ const Homepage = () => {
           Use Cases
         </div>
 
-        <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
-          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
-            <div className="Homepage-detail-text-four"><b>Personnal</b></div>
-            <div className="Homepage-detail-text-four">
+        <div className="Homepage-detail" style={{paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
+          <div className="Homepage-detail-one">
+            <div className="Homepage-detail-text-four"><b>Personnal</b><br/>
             stockez des documents de tous types.<br/>
             - Creez les dossiers que vous désirez pour organiser vos fichiers.<br/>
             - Téléchargez sur ipfs, par l'explorateur, les fichiers que vous voulez ajouter à votre disque.<br/>
             - Creez un lien ipfs sur un fichier déjà existant sur ipfs.<br/><br/>
             N'oubliez pas que votre disque est accessible a tous. N'importe qui peut lire votre disque.<br/>
-            <b>Attention:</b> ne mettez pas de documents personnel comme votre carte d'identité ou votre passport.<br/>
+            <b>Attention:</b> ne mettez pas de documents personnel comme votre carte d'identité ou votre passport.<br/><br/>
             </div>
           </div>
         </div>
 
         <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
-          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+          <div className="Homepage-detail-one">
             <div className="Homepage-detail-text-four"><b>Company</b></div>
             <div className="Homepage-detail-text-four">
             stockez des documents de tous types.<br/>
@@ -199,13 +206,13 @@ const Homepage = () => {
             - Téléchargez sur ipfs, par l'explorateur, les fichiers que vous voulez ajouter à votre disque : images, videos, documentations, ....<br/>
             - Creez un lien ipfs sur un fichier déjà existant sur ipfs.<br/><br/>
             Toute personne pourra acceder à vos documents <b>indéfiniment</b>.<br/>
-            <b>Attention:</b> ne mettez pas de documents interne à l'entreprise.<br/>
+            <b>Attention:</b> ne mettez pas de documents interne à l'entreprise.<br/><br/>
             </div>
           </div>
         </div>
 
         <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "10px", marginBottom: "20px"}}>
-          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+          <div className="Homepage-detail-one">
             <div className="Homepage-detail-text-four"><b>Web2 to Web3</b></div>
             <div className="Homepage-detail-text-four">
             (web galerie) Avant, il fallait ouvrir un acces ftp ou une page web d'upload a vos utilisateurs pour qu'ils puissent
@@ -240,7 +247,7 @@ Vous n'avez plus qu'a lire le dossier pour obtenir les liens ipfs et les affiche
         </div>
 
       <div className="Homepage-detail" style={{width: "100%", paddingLeft: "0px", marginTop: "0px"}}>
-          <div className="Homepage-detail-four" style={{ width: "100%", marginRight: "10px" }}>
+          <div className="Homepage-detail-one">
             <div className="Homepage-detail-text-four"><b>With contract</b></div>
             <div className="Homepage-detail-text-four">
             - Ajouter les librairies solidity a votre DAO.<br/>
