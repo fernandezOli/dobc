@@ -29,14 +29,14 @@ const ModalNewFolder = ({ isNewFolderShowing, cancelFunc, validFunc, folderPath 
 							<input className=""
 								placeholder="New folder name"
 								value={currentInput}
-								onChange={(e) => { setCurrentInput (e.target.value); }}
+								onChange={(e) => { setCurrentInput(e.target.value); }}
 							/>
 						</div>
 					</div>
 				</div>
 				<div className="modal_div_button">
 					<button className="App-button" onClick={cancelFunc}>Cancel</button>
-					<button className="App-button" onClick={() => {validFunc(folderPath,currentInput); setCurrentInput("")}} disabled={currentInput.length === 0 ? true : ""}>Create</button>
+					<button className="App-button" onClick={() => {validFunc(folderPath,currentInput); cancelFunc(); setCurrentInput("")}} disabled={currentInput.length === 0 ? true : ""}>Create</button>
 				</div>
 			  </div>
 			</div>

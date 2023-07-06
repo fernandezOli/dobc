@@ -182,7 +182,6 @@ class diskClass {
 			//loaderStop();
 			if (error.code === 4001 || error.code === "ACTION_REJECTED") {
 				console.log("Transaction denied by user");
-				alert('Transaction denied by user. Stopped.');
 				return false;
 			}
 			console.error('Error createDir [' + error.code + ']: ', error);
@@ -267,7 +266,6 @@ class diskClass {
 		} catch (error) {
 			if (error.code === 4001 || error.code === "ACTION_REJECTED") {
 				console.log("Transaction denied by user");
-				//alert('Transaction denied by user. Stopped.');
 				return false;
 			}
 			console.error('Error createFile [' + error.code + ']: ', error);

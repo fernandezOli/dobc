@@ -286,7 +286,7 @@ const Explorer = () => {
     let diskResult;
     console.log('folderPath: ', folderPath);
     console.log('folderName: ', folderName);
-		toggleModalNewFolder();
+		//toggleModalNewFolder();
     if (folderPath === "") return;
     if (folderName === "") return;
 
