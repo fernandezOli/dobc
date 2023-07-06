@@ -190,9 +190,9 @@ class diskClass {
 		}
 	}
 
-	/// @notice test the existence of a file.
+	/// @notice test if file exist.
 	async existFile(fileName) {
-		//console.log('tests the existence of a file ...');
+		//console.log('test if file exist: ',fileName);
 		if (!this.checkVar()) return null;
 		try {
 			//const signer = this._provider.getSigner();

@@ -6,7 +6,7 @@ import { Axios } from "axios";
 import { useAccount, useSigner, useDisconnect/*, useProvider*/ } from 'wagmi';
 
 import { NETWORK_ID_SYMBOL, REGISTRY_ADDR } from '../config/config'
-import { truncAddress/*, amountCent/*, sleep*/ } from './Tools';
+import { truncAddress, amountCent/*, sleep*/ } from './Tools';
 
 import DiskTreeView from "./DiskTreeView";
 import disk from "../class/diskClass";
@@ -256,11 +256,16 @@ const Explorer = () => {
   /* create disk callback */
   async function createDisk() {
     console.log('-- createDisk --');
-    const userDisk = await diskRegistryClass.diskCreate();
-    if(userDisk === null) {
+    //loaderStart("Waiting transaction, Please wait ...");
+    const transaction = await diskRegistryClass.diskCreate();
+    if(transaction === null) {
       showInfoModal("ERROR", "ERROR", 'Creation Disk error. Reload please !');
       return;
     }
+		//console.log('waiting transaction ...');
+		//await signer.provider.waitForTransaction(transaction.hash);
+
+    //loaderStart("Verifying, Please wait ...");
     const haveDisk = await diskRegistryClass.diskExist(address);
     if(!haveDisk) {
       showInfoModal("ERROR", "ERROR", 'Creation Disk error, disk not exist. Reload please !');
@@ -642,7 +647,7 @@ const Explorer = () => {
         <div style={{ width: "100%" }}></div>
         <div className="Explorer-header-userData">
           <span style={{ marginRight: "15px" }}>{truncAddress(address, 6, 4, '....')}</span>
-          <span>[{balanceOwner} {NETWORK_ID_SYMBOL}]</span>
+          <span>[{amountCent(balanceOwner)} {NETWORK_ID_SYMBOL}]</span>
         </div>
       </header>
 

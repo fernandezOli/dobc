@@ -38,9 +38,9 @@ class DiskRegistryClass {
 		try {
 			//const signer = this._provider.getSigner();
 			const contract = new ethers.Contract(this._registryContractAddress, diskRegistryAbi, this._signer);
-			const result = await contract.diskCreate();
-			//console.log('diskCreate: ', result);
-			return result;
+			const transaction = await contract.diskCreate();
+			//console.log('diskCreate: ', transaction);
+			return transaction;
 		}
 		catch(error) {
 			console.error('[diskCreate] error: ', error);
