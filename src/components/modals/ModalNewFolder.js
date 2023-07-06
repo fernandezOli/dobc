@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import addFolderIcon from '../../assets/ico/addFolder48.png';
 
 const ModalNewFolder = ({ isNewFolderShowing, cancelFunc, validFunc, folderPath }) => {
 	const [currentInput, setCurrentInput ] = React.useState("");
@@ -11,7 +12,10 @@ const ModalNewFolder = ({ isNewFolderShowing, cancelFunc, validFunc, folderPath 
 			<div className="modal_wrapper">
 			  <div className="modal_info">
 				<div className="modal_header modal_title_new_folder">
-				  <div className="modal_title">Create New Folder</div>
+				  <div className="modal_title">
+					<img src={addFolderIcon} alt="add Folder Icon" className="modal_title_img"></img>
+				  	<span style={{marginLeft: "5px"}}>Create New Folder</span>
+				  </div>
 				</div>
 
 				<div className="modal_body" style={{display: "flex"}}>

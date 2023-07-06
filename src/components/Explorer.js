@@ -285,8 +285,6 @@ const Explorer = () => {
     if (folderPath === "") return;
     if (folderName === "") return;
 
-    if (folderName !== "") return;
-
     diskResult = await diskClass.getOwner();
     if (diskResult.toLowerCase() !== address.toLowerCase()) {
       showInfoModal("ERROR", "ERROR", 'You are not the owner !');
