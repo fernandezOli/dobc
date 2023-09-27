@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
+import uploadIcon from '../../assets/ico/upload48.png';
+
 import { formatSize } from '../Tools';
 
 const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBlocSize }) => {
@@ -22,7 +24,9 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 	}
 
 	function validCallback() {
-		validFunc(filePointer);
+		validFunc(filePointer, pathUpload, inputName, document.getElementById('onchain').checked, pinataApiKey, pinataSecretApiKey);
+		//setFilePointer(file);
+		setInputName("");
 	}
 	/*
 	const reset = async() => {
@@ -44,7 +48,10 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 			<div className="modal_wrapper">
 			  <div className="modal_info">
 				<div className="modal_header modal_title_new_folder">
-				  <div className="modal_title">Upload File</div>
+				  <div className="modal_title">
+				  	<img src={uploadIcon} alt="" className="modal_title_img"></img>
+				  	<span style={{marginLeft: "5px"}}>Upload File</span>
+				  </div>
 				</div>
 				<div className="modal_body">
 					<div>
@@ -107,7 +114,7 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 						</div>
 					</div>
 					<div className="modal_div_button">
-						<button className="App-button" onClick={cancelFunc}>Cancel</button>
+						<button className="App-button" onClick={() => {cancelFunc(); setInputName("");}}>Cancel</button>
 						<button className="App-button" onClick={validCallback} disabled={(inputName.length === 0) ? true : ""}>Upload</button>
 					</div>
 				</div>

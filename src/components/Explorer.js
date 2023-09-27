@@ -127,6 +127,7 @@ const Explorer = () => {
         //console.log("[checkExplorer] address: ", address);
         if(signer === undefined) return;
         //console.log("[checkExplorer] signer: ", signer);
+        //console.log("[checkExplorer] network: ", signer.provider._network.name);
 
         if (isLoginShowed) toggleModalLogin();
         const value = await signer.provider.getBalance(address);
@@ -205,7 +206,7 @@ const Explorer = () => {
 	}
 
 	const showUrlFileModal = async (text) => {
-		//console.log("showUrlFileModal: " + text);
+		console.log("showUrlFileModal: " + text);
 		textUrlFileChange(text);
 		toggleModalUrlFile();
 	}
@@ -229,9 +230,12 @@ const Explorer = () => {
     const fileEntry = fileList[element];
     pathPropertiesChange("/");
     namePropertiesChange(fileEntry.name);
-    typePropertiesChange(contentType[parseInt(fileEntry.content_type._hex)]);
+    const typeFile = fileEntry.content_type;
+		//console.log("content_type: ",typeFile);
+
+    typePropertiesChange(contentType[typeFile]);
     datePropertiesChange((new Date((parseInt(fileEntry.creation_date._hex) * 1000))).toLocaleString());
-    if (parseInt(fileEntry.content_type._hex) > 1) {
+    if (typeFile > 1) {
       const dataFile = await diskClass.readFile("/" + fileEntry.name);
       //console.log("[showPropertiesModal] data Bin: ", dataFile);
       //console.log("[showPropertiesModal] data UTF: ", ethers.utils.toUtf8String(dataFile));
@@ -343,19 +347,19 @@ const Explorer = () => {
   }
 
   /* url file callback */
-  async function UrlFileCallback() {
+  async function UrlFileCallback(path, name, linkData) {
     console.log('-- UrlFileCallback --');
-    const path = document.getElementById('UrlFilePath').innerText;
-    const name = document.getElementById('UrlFileName').value;
-    const linkData = document.getElementById('UrlFileLink').value;
-    //console.log('path: ', path);
-    //console.log('name: ', name);
-    //console.log('link: ', linkData);
+    //const path = document.getElementById('UrlFilePath').innerText;
+    //const name = document.getElementById('UrlFileName').value;
+    //const linkData = document.getElementById('UrlFileLink').value;
+    console.log('path: ', path);
+    console.log('name: ', name);
+    console.log('link: ', linkData);
 		toggleModalUrlFile();
     if (path === "") return;
     if (name === "") return;
     if (linkData === "") return;
-    const result = await sendDataToBlockchain(path, name, "attributs", linkData, 1);
+    const result = await sendDataToBlockchain(path, name, "{ type: 'webLink'}", linkData, 1);
     if (result) {
       refreshList(path);
       showInfoModal("SUCCESS", "SUCCESS", 'Url file created succefully');
@@ -394,21 +398,21 @@ const Explorer = () => {
   async function UploadCallbackCancel() {
     console.log('-- UploadCallbackCancel --');
     //document.getElementById('UploadPath').innerText = "";
-    document.getElementById('UploadName').value = "";
+    //document.getElementById('UploadName').value = "";
     //ModalUpload.reset();
     toggleModalUpload();
   }
 
   /* Upload callback */
-  async function UploadCallback(fileUploadPointer) {
+  async function UploadCallback(fileUploadPointer, path, name, storage, pinataKey, pinataSecretKey) {
     //console.log('-- UploadCallback --');
     //console.log('UploadCallback: ', fileUploadPointer);
-    const path = document.getElementById('UploadPath').innerText;
-    const name = document.getElementById('UploadName').value;
-    const storage = document.getElementById('onchain').checked;
+    //const path = document.getElementById('UploadPath').innerText;
+    //const name = document.getElementById('UploadName').value;
+    //const storage = document.getElementById('onchain').checked;
     //console.log('UploadCallback: ', storage);
-    const pinataKey = document.getElementById('PinataKey').value;
-    const pinataSecretKey = document.getElementById('PinataSecretKey').value;
+    //const pinataKey = document.getElementById('PinataKey').value;
+    //const pinataSecretKey = document.getElementById('PinataSecretKey').value;
     toggleModalUpload();
     if (path === "") return;
     if (name === "") return;
@@ -553,14 +557,14 @@ const Explorer = () => {
 
   async function loadFolderList(lastEntry, parentId, path) {
     console.log('-- loadFolderList --');
-    console.log('path: ',path);
+    //console.log('path: ',path);
     let diskResult = await diskClass.longListDir(path);
     diskResult = [...diskResult].sort(sortFunction);
     //console.log('diskResult: ', diskResult);
     if(diskResult.lentgh) return null;
     let folderList = [];
     for(let i = 0; i < diskResult.length; i++) {
-      folderList.push({
+      if(diskResult[i].content_type === 1) folderList.push({
         name: diskResult[i].name,
         children: [],
         id: lastEntry++,
@@ -597,9 +601,12 @@ const Explorer = () => {
     if (data === "") return false;
     if (type > 1) return false;
 
+    //console.log('path: ',path);
+    //console.log('name: ',name);
+    //console.log('attributs: ',attributs);
+    //console.log('data: ',data);
 
     // check name not containt '/'
-    // check file not already exist
     let pathName = path + "/" + name;
     if (path === "/") pathName = path + name;
     console.log('create File: ', pathName);
@@ -616,8 +623,8 @@ const Explorer = () => {
     // create file
     loaderStart("Waiting transaction, Please wait ...");
     //diskResult = await diskClass.createFile(path, name, attributs, type, data);
-    diskResult = await diskClass.createFileBinary(path, name, attributs, data);
-    //diskResult = await diskClass.createFileUrl(path, name, attributs, data);
+    //diskResult = await diskClass.createFileBinary(path, name, attributs, data);
+    diskResult = await diskClass.createFileUrl(path, name, attributs, data);
     if (diskResult === false) {
       loaderStop();
       showInfoModal("ERROR", "ERROR", 'Create file error !');
@@ -680,9 +687,9 @@ const Explorer = () => {
             <tbody>
               {fileList !== null && fileList.length !== 0 && [...fileList].map((fileEntry, index) => (
                 <tr id={`tr_${index}`} className="Explorer-list-tr" key={index} onClick={(e) => {tableListSelectItem(e)}}>
-                  <td className="Explorer-list-td Explorer-list-td-name"><img src={parseInt(fileEntry.content_type._hex) === 1 ? folderIcon: fileIcon} alt="" style={{marginRight: "5px", height: "16px"}}></img>{fileEntry.name}</td>
+                  <td className="Explorer-list-td Explorer-list-td-name"><img src={parseInt(fileEntry.content_type) === 1 ? folderIcon: fileIcon} alt="" style={{marginRight: "5px", height: "16px"}}></img>{fileEntry.name}</td>
                   <td className="Explorer-list-td">{(new Date((parseInt(fileEntry.creation_date._hex) * 1000))).toLocaleString()}</td>
-                  <td className="Explorer-list-td">{contentType[parseInt(fileEntry.content_type._hex)]}</td>
+                  <td className="Explorer-list-td">{contentType[parseInt(fileEntry.content_type)]}</td>
                 </tr>
               ))}
             </tbody>
@@ -723,6 +730,7 @@ const Explorer = () => {
         addressDiskProperties={textAddressDiskProperties} ownerDiskProperties={textOwnerDiskProperties}
         versionDiskProperties={textVersionDiskProperties} immutableDiskProperties={textImmutableDiskProperties}
         blocSizeDiskProperties={valueBlocSizeDiskProperties}
+        networkName={signer === undefined? "":signer.provider._network.name}
       >
       </ModalDiskProperties>
       <a id="downloadLink" style={{display: "none"}} href="http://">Download</a>

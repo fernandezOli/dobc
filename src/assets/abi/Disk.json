@@ -10,6 +10,12 @@
       {
         "indexed": false,
         "internalType": "string",
+        "name": "path",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "name",
         "type": "string"
       }
@@ -23,7 +29,7 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "name",
+        "name": "pathName",
         "type": "string"
       }
     ],
@@ -50,32 +56,13 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      }
-    ],
-    "name": "_existFile",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "blocSize",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "",
-        "type": "uint256"
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -112,9 +99,14 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "string",
+        "name": "_attributs",
+        "type": "string"
+      },
+      {
+        "internalType": "uint32",
         "name": "_content_type",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "internalType": "bytes",
@@ -228,14 +220,19 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint32",
             "name": "content_type",
-            "type": "uint256"
+            "type": "uint32"
           },
           {
             "internalType": "uint256",
             "name": "creation_date",
             "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "attributs",
+            "type": "string"
           }
         ],
         "internalType": "struct Disk.longListInfo",
@@ -312,9 +309,9 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "content_type",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "internalType": "uint256",
@@ -353,14 +350,19 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint32",
             "name": "content_type",
-            "type": "uint256"
+            "type": "uint32"
           },
           {
             "internalType": "uint256",
             "name": "creation_date",
             "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "attributs",
+            "type": "string"
           }
         ],
         "internalType": "struct Disk.longListInfo[]",

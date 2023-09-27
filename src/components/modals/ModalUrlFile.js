@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import linkIcon from '../../assets/ico/link48.png';
 
 const ModalUrlFile = ({ isUrlFileShowing, cancelFunc, validFunc, textUrlFile }) => {
 	const [inputName, setInputName ] = React.useState("");
@@ -12,7 +13,10 @@ const ModalUrlFile = ({ isUrlFileShowing, cancelFunc, validFunc, textUrlFile }) 
 			<div className="modal_wrapper">
 			  <div className="modal_info">
 				<div className="modal_header modal_title_new_folder">
-				  <div className="modal_title">Create Url File</div>
+				  <div className="modal_title">
+				    <img src={linkIcon} alt="" className="modal_title_img"></img>
+				  	<span style={{marginLeft: "5px"}}>Create Url File</span>
+				  </div>
 				</div>
 				<div className="modal_body">
 					<div>
@@ -45,7 +49,7 @@ const ModalUrlFile = ({ isUrlFileShowing, cancelFunc, validFunc, textUrlFile }) 
 					</div>
 					<div className="modal_div_button">
 						<button className="App-button" onClick={cancelFunc}>Cancel</button>
-						<button className="App-button" onClick={validFunc} disabled={(inputName.length === 0 || inputLink.length === 0) ? true : ""}>Create</button>
+						<button className="App-button" onClick={() => {validFunc(textUrlFile, inputName, inputLink);setInputName("");setInputLink("");}} disabled={(inputName.length === 0 || inputLink.length === 0) ? true : ""}>Create</button>
 					</div>
 				</div>
 			  </div>

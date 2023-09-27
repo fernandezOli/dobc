@@ -3,7 +3,14 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 //import '../assets/css/modalLoader.css';
 
-const ModalDiskProperties = ({ isDiskPropertiesShowing, hideDiskProperties, addressDiskProperties, ownerDiskProperties, versionDiskProperties, immutableDiskProperties, blocSizeDiskProperties }) =>
+const ModalDiskProperties = ({ isDiskPropertiesShowing,
+								hideDiskProperties,
+								addressDiskProperties,
+								ownerDiskProperties,
+								versionDiskProperties,
+								immutableDiskProperties,
+								blocSizeDiskProperties,
+								networkName }) =>
 isDiskPropertiesShowing
 	? ReactDOM.createPortal(
 		<>
@@ -23,7 +30,7 @@ isDiskPropertiesShowing
 						<div className="modal_text">Max bloc size:</div>
 					</div>
 					<div className="modal_text_right" style={{paddingLeft: "10px"}}>
-						<div className="modal_text">Ganache</div>
+						<div className="modal_text">{networkName}</div>
 						<div className="modal_text">{addressDiskProperties}</div>
 						<div className="modal_text">{ownerDiskProperties}</div>
 						<div className="modal_text">{versionDiskProperties}</div>
