@@ -61,6 +61,7 @@ const Explorer = () => {
   const [addressDisk, setAddressDisk] = useState(null);
   //const [addressOwner, setAddressOwner] = useState(null);
   const [balanceOwner, setBalanceOwner] = useState(0);
+  const [pathBarText, setpathBarText] = useState("/");
   const [fileList, setFileList] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
   const [treeSelectedItem, setTreeSelectedItem] = useState(1);
@@ -132,6 +133,20 @@ const Explorer = () => {
         if (isLoginShowed) toggleModalLogin();
         const value = await signer.provider.getBalance(address);
         setBalanceOwner(ethers.utils.formatEther(value));
+        /*
+        //amountCent(balanceOwner)
+        //console.log("[balanceOwner] value: ", value);
+        console.log("[balanceOwner] ethers.utils.formatEther(value): ", ethers.utils.formatEther(value)); //2.182628453275276787
+        //console.log("[balanceOwner] typeof value: ", typeof(value));
+        console.log("[balanceOwner] typeof ethers.utils.formatEther(value): ", typeof(ethers.utils.formatEther(value))); //2.182628453275276787
+
+        console.log("[balanceOwner] : ", amountCent(ethers.utils.formatEther(value)));
+        console.log("[balanceOwner] 1: ", amountCent("1"));
+        console.log("[balanceOwner] 10: ", amountCent("10"));
+        console.log("[balanceOwner] 0.1: ", amountCent("0.1"));
+        console.log("[balanceOwner] 0.01: ", amountCent("0.01"));
+        console.log("[balanceOwner] 1.0123456789: ", amountCent("1.0123456789"));
+        */
 
         diskRegistryClass = new diskRegistry(REGISTRY_ADDR, signer);
         loadDisk();
@@ -532,6 +547,16 @@ const Explorer = () => {
   }
 
   //**** functions ****
+  async function refreshPath(path) {
+    //console.log('refreshPath: ', path);
+    if (path === "/") {
+      setpathBarText(' /');
+      return;
+    }
+    const foldersList = path.split('/');
+    setpathBarText(foldersList.join(" / "));
+  }
+
   async function treeSelectItem(id, path) {
     console.log('[treeSelectItem] id: ', id);
     setTreeSelectedItem(id);
@@ -543,6 +568,7 @@ const Explorer = () => {
     //console.log('refreshList');
     let diskResult = await diskClass.longListDir(path);
     setFileList([...diskResult].sort(sortFunction));
+    refreshPath(path);
   }
 
 	function sortFunction(a, b) {
@@ -556,7 +582,7 @@ const Explorer = () => {
 	}
 
   async function loadFolderList(lastEntry, parentId, path) {
-    console.log('-- loadFolderList --');
+    //console.log('-- loadFolderList --');
     //console.log('path: ',path);
     let diskResult = await diskClass.longListDir(path);
     diskResult = [...diskResult].sort(sortFunction);
@@ -665,7 +691,7 @@ const Explorer = () => {
         <div className="Explorer-menu-button" onClick={() => btnDownload()} disabled={selectedElement === null ? true : ""}><img src={downloadIcon} alt="" className="Explorer-menu-icon"></img><span>Download</span></div>
         <div className="Explorer-menu-button" onClick={() => btnProperties()} disabled={selectedElement === null ? true : ""}><img src={propertiesIcon} alt="" className="Explorer-menu-icon"></img><span>Properties</span></div>
         <div className="Explorer-menu-button" onClick={() => btnRefresh()}><img src={refreshIcon} alt="" className="Explorer-menu-icon"></img><span>Refresh</span></div>
-        <div className="Explorer-menu-textDir"><img src={folderIcon} alt="" style={{ marginRight: "5px", height: "16px" }}></img><span id="menuPath">IDDS: {'>'} /</span></div>
+        <div className="Explorer-menu-textDir"><img src={folderIcon} alt="" style={{ marginRight: "5px", height: "16px" }}></img><span id="menuPath">Disk [{truncAddress(addressDisk, 6, 4, '....') + ']:' + pathBarText}</span></div>
         <div className="Explorer-menu-button" onClick={() => btnDiskProperties()} style={{ padding: "0px", marginLeft: "5px" }}><img src={diskIcon} style={{ marginLeft: "5px" }} alt="Disk properties" title="Disk properties" className="Explorer-menu-icon"></img></div>
         <div className="Explorer-menu-button" onClick={() => disconnect}><img src={logoutIcon} alt="" className="Explorer-menu-icon"></img><span>Logout</span></div>
       </div>
@@ -694,7 +720,7 @@ const Explorer = () => {
               ))}
             </tbody>
           </table>
-          {(fileList === null || fileList.length === 0) && <div className="Explorer-noFolder">Empty folder</div>}
+          {fileList === null ? <div className="Explorer-noFolder">No disk</div> : (fileList.length === 0) && <div className="Explorer-noFolder">Empty folder</div>}
         </div>
       </div>
       <div id="statusBar" className="Explorer-statusBar">Disk address: {truncAddress(addressDisk, 6, 4, '....')}</div>
