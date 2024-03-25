@@ -58,7 +58,7 @@ describe("**** DiskRegistry ****", function () {
     it("change ownership", async function () {
       expect(await DiskRegistry.diskExist(owner.address)).to.equal(false);
       await DiskRegistry.setDiskContractAddress(Disk.address);
-      await DiskRegistry.diskCreate();
+      await DiskRegistry.diskCreate({ gasLimit: 30000000 });
       expect(await DiskRegistry.diskExist(owner.address)).to.equal(true);
 
       await DiskRegistry.changeDiskOwnership(owner.address, olivier.address);
@@ -86,7 +86,7 @@ describe("**** DiskRegistry ****", function () {
       */
 
       expect(await DiskRegistry.diskExist(owner.address)).to.equal(false);
-      await DiskRegistry.diskCreate();
+      await DiskRegistry.diskCreate({ gasLimit: 30000000 });
       expect(await DiskRegistry.diskExist(owner.address)).to.equal(true);
       await expect(DiskRegistry.diskCreate()).to.be.revertedWith("You already have a disk");
 
@@ -98,7 +98,7 @@ describe("**** DiskRegistry ****", function () {
       //await userDisk.init();
       console.log("owner address: ", owner.address);
       expect(await userDisk.owner()).to.equal(owner.address);
-      expect(await userDisk.version()).to.equal("1.0"); //userDisk.version2 is not a function
+      expect(await userDisk.version()).to.equal("1.0");
       expect(await userDisk.existDir("/")).to.equal(true);
     });
 

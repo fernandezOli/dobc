@@ -20,7 +20,7 @@ module.exports = {
     hardhat: {
       gas: 2100000,
       gasPrice: 2000000000,
-      blockGasLimit: 30000000, // 100000000429720 // whatever you want here
+      blockGasLimit: 30000000,
 	  allowUnlimitedContractSize: true,
     },
     localhost: {
