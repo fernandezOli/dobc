@@ -116,6 +116,7 @@
   padding-top: 75px;
   font-size: calc(20px + 4vmin);
   /*font-weight: bold;*/
+  /*white-space: nowrap;*/
 }
 
 .Homepage-detail-text {

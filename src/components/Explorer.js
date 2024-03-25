@@ -2,8 +2,9 @@
 import { React, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 //import { useNavigate } from "react-router-dom";
-import { Axios } from "axios";
-import { useAccount, useSigner, useDisconnect/*, useProvider*/ } from 'wagmi';
+//import { Axios } from "axios";
+import { useAccount, useSigner, /*useDisconnect/*, useProvider*/ } from 'wagmi';
+import { PinataUploadToIPFS } from "./PinataUpload";
 
 import { NETWORK_ID_SYMBOL, REGISTRY_ADDR } from '../config/config'
 import { truncAddress, amountCent/*, sleep*/ } from './Tools';
@@ -63,6 +64,7 @@ const Explorer = () => {
   const [balanceOwner, setBalanceOwner] = useState(0);
   const [pathBarText, setpathBarText] = useState("/");
   const [fileList, setFileList] = useState(null);
+  const [selectedPath, setSelectedPath] = useState("/");
   const [selectedElement, setSelectedElement] = useState(null);
   const [treeSelectedItem, setTreeSelectedItem] = useState(1);
   const [addFolderItem, setAddFolderItem] = useState(null);
@@ -70,7 +72,7 @@ const Explorer = () => {
   const contentType = ["unknown", "folder", "binary file", "url file"];
 
   //const navigate = useNavigate();
-  const { disconnect } = useDisconnect();
+  //const { disconnect } = useDisconnect();
   //return <button onClick={disconnect}>Disconnect</button>;
   const { address/*, isConnecting, isDisconnected*/ } = useAccount();
   const { data: signer/*, isError, isLoading*/ } = useSigner()
@@ -264,32 +266,36 @@ const Explorer = () => {
 	}
 
   //**** Buttons ****
-  /*
   async function btnDisconnect() {
     console.log('-- btnDisconnect --');
     //await authInfos._connectWallet();
-    navigate("/", { replace: true });
+    //disconnect();
+    //navigate("/", { replace: true });
+    window.location.reload();
   }
-  */
 
   /* create disk callback */
   async function createDisk() {
     console.log('-- createDisk --');
-    //loaderStart("Waiting transaction, Please wait ...");
+    toggleModalCreate();
+    loaderStart("Waiting transaction, Please wait ...");
     const transaction = await diskRegistryClass.diskCreate();
     if(transaction === null) {
+      loaderStop();
       showInfoModal("ERROR", "ERROR", 'Creation Disk error. Reload please !');
       return;
     }
-		//console.log('waiting transaction ...');
-		//await signer.provider.waitForTransaction(transaction.hash);
+		console.log('createDisk waiting transaction ...');
+		await signer.provider.waitForTransaction(transaction.hash);
 
-    //loaderStart("Verifying, Please wait ...");
+    loaderStart("Verifying, Please wait ...");
     const haveDisk = await diskRegistryClass.diskExist(address);
     if(!haveDisk) {
+      loaderStop();
       showInfoModal("ERROR", "ERROR", 'Creation Disk error, disk not exist. Reload please !');
       return;
     }
+    loaderStop();
     loadDisk();
   }
 
@@ -358,18 +364,15 @@ const Explorer = () => {
 
   async function btnUrlFile() {
     //console.log('-- btnUrlFile --');
-    showUrlFileModal('/');
+    showUrlFileModal(selectedPath);
   }
 
   /* url file callback */
   async function UrlFileCallback(path, name, linkData) {
-    console.log('-- UrlFileCallback --');
-    //const path = document.getElementById('UrlFilePath').innerText;
-    //const name = document.getElementById('UrlFileName').value;
-    //const linkData = document.getElementById('UrlFileLink').value;
-    console.log('path: ', path);
-    console.log('name: ', name);
-    console.log('link: ', linkData);
+    //console.log('-- UrlFileCallback --');
+    //console.log('path: ', path);
+    //console.log('name: ', name);
+    //console.log('link: ', linkData);
 		toggleModalUrlFile();
     if (path === "") return;
     if (name === "") return;
@@ -379,7 +382,7 @@ const Explorer = () => {
       refreshList(path);
       showInfoModal("SUCCESS", "SUCCESS", 'Url file created succefully');
     }
-
+    else showInfoModal("ERROR", "ERROR", 'Error creating url file !');
   }
 
   async function btnDownload() {
@@ -387,74 +390,81 @@ const Explorer = () => {
     if(selectedElement === null) return;
     const element = selectedElement.id.substr(3);
     const fileEntry = fileList[element];
+    console.log("path:" + selectedPath);
+    console.log("name:" + fileEntry.name);
+		console.log("content_type: ",fileEntry.content_type); // 3 = ipfs
+    //console.log("[showPropertiesModal] data Bin: ", dataFile);
+    //console.log("[showPropertiesModal] data UTF: ", ethers.utils.toUtf8String(dataFile));
+    //console.log("link:" + ethers.utils.toUtf8String(dataFile));
+
     try {
-      const dataFile = await diskClass.readFile("/" + fileEntry.name);
-      //if url => ethers.utils.toUtf8String(dataFile)
-			var blob = new Blob([ethers.utils.toUtf8String(dataFile)], { type: 'application/octet-binary' });
-			let url = window.URL.createObjectURL(blob);
+      const fileName = (selectedPath === '/'?"/" + fileEntry.name:selectedPath + "/" + fileEntry.name);
+      const dataFile = await diskClass.readFile(fileName);
+			//var blob = new Blob([ethers.utils.toUtf8String(dataFile)], { type: 'application/octet-binary' });
+			//let url = window.URL.createObjectURL(blob);
+      let url = ethers.utils.toUtf8String(dataFile);
 			let a = document.getElementById("downloadLink");
 			a.href = url;
 			a.download = fileEntry.name;
 			a.click();
 			window.URL.revokeObjectURL(url);
-			//console.log('Download successfull');
-
     } catch(error) {
+      showInfoModal("ERROR", "ERROR", 'Error downloading file');
       console.error('[btnDownload] error: ', error);
     }
   }
 
   async function btnUpload() {
     //console.log('-- btnUpload --');
-    showUploadModal('/');
+    showUploadModal(selectedPath);
   }
 
   /* Cancel Upload callback */
   async function UploadCallbackCancel() {
-    console.log('-- UploadCallbackCancel --');
-    //document.getElementById('UploadPath').innerText = "";
-    //document.getElementById('UploadName').value = "";
-    //ModalUpload.reset();
+    //console.log('-- UploadCallbackCancel --');
     toggleModalUpload();
   }
 
   /* Upload callback */
-  async function UploadCallback(fileUploadPointer, path, name, storage, pinataKey, pinataSecretKey) {
+  async function UploadCallback(fileUploadPointer, path, name, storage, apiKey, secretKey) {
     //console.log('-- UploadCallback --');
     //console.log('UploadCallback: ', fileUploadPointer);
-    //const path = document.getElementById('UploadPath').innerText;
-    //const name = document.getElementById('UploadName').value;
-    //const storage = document.getElementById('onchain').checked;
     //console.log('UploadCallback: ', storage);
-    //const pinataKey = document.getElementById('PinataKey').value;
-    //const pinataSecretKey = document.getElementById('PinataSecretKey').value;
     toggleModalUpload();
     if (path === "") return;
     if (name === "") return;
     //if (name !== "") return;
 
+    // save on ipfs
     if (!storage) {
       console.log('store on ipfs');
-      if (pinataKey === "" || pinataSecretKey === "") {
-        showInfoModal("ERROR", "ERROR", 'You need to have api key and secret key to use Pinata.');
+      if (apiKey === "" || secretKey === "") {
+        showInfoModal("ERROR", "ERROR", 'You need to have api key and secret key.');
         return;
       }
       try {
         // waiting...
+        loaderStart("Sending file to ipfs, Please wait ...");
         //https://dev.to/fidalmathew/send-files-to-ipfs-using-pinata-api-in-reactjs-3c3
-        const ipfsCID = await uploadToIpfs(path, name, pinataKey, pinataSecretKey);
+        const ipfsCID = await PinataUploadToIPFS(fileUploadPointer, address, name, apiKey, secretKey);
+        //const ipfsCID = await FilecoinUploadToIPFS(fileUploadPointer, signer)
+        loaderStop();
         if (ipfsCID === null) {
-          showInfoModal("ERROR", "ERROR", 'Error sending File to IPFS');
+          showInfoModal("ERROR", "ERROR", 'Error sending file to IPFS');
           return;
         }
+        showInfoModal("SUCCESS", "SUCCESS", 'File uploaded succefully');
         //https://ipfs.io/ipfs/QmcfHNjvpjXLBjEnbj985RvT9zCYkdYS4djBr9V6h7TP6i
         /*
-        const result = await sendDataToBlockchain(path, name, "attributs", authInfos.IPFS_HEADER + ipfsCID, 1);
+        //UrlFileCallback(path, name, "https://ipfs.io/ipfs/" + ipfsCID);
+        loaderStart("Sending url to blockchain, Please wait ...");
+        const result = await sendDataToBlockchain(path, name, "attributs", "https://ipfs.io/ipfs/" + ipfsCID, 1);
+        loaderStop();
         if (result) {
           refreshList(path);
           showInfoModal("SUCCESS", "SUCCESS", 'File uploaded succefully');
         }
-        showInfoModal("ERROR", "ERROR", 'Error sending data to blockchain !');
+        else showInfoModal("ERROR", "ERROR", 'Error sending data to blockchain !');
         return;
         */
         return;
@@ -466,6 +476,8 @@ const Explorer = () => {
       }
     }
 
+    // save on blockchain
+    //console.log('UploadCallback: ', fileUploadPointer.type);
     const reader = new FileReader();
     //reader.readAsText(fileUploadPointer, 'UTF-8');
     reader.readAsArrayBuffer(fileUploadPointer);
@@ -476,17 +488,16 @@ const Explorer = () => {
         //console.log('UploadCallback: ', content); //ArrayBuffer
         //console.log('UploadCallback: ', new Uint8Array(content)); //ArrayBuffer to bytes
         if (content.byteLength === 0) {
-          showInfoModal("ERROR", "ERROR", 'Empty file !');
+          showInfoModal("ERROR", "ERROR", 'Empty content !');
           return;
         }
         // envoi
-        const result = await sendDataToBlockchain(path, name, "attributs", content, 0);
+        const result = await sendDataToBlockchain(path, name, "{ type: '"+fileUploadPointer.type+"'}", content, 0); //"{ type: 'data'}"
         if (result) {
           refreshList(path);
           showInfoModal("SUCCESS", "SUCCESS", 'File created succefully');
-          return;
         }
-        showInfoModal("ERROR", "ERROR", 'upload file error !');
+        else showInfoModal("ERROR", "ERROR", 'upload file error !');
         return;
       }
       catch (e) {
@@ -494,38 +505,6 @@ const Explorer = () => {
         showInfoModal("ERROR", "ERROR", 'upload file error !');
         return;
       }
-    }
-  }
-
-  async function uploadToIpfs(path, name, pinataKey, pinataSecretKey) {
-    if (path === "" || name === "" || pinataKey === "" || pinataSecretKey === "") {
-      console.error("Error sending File to IPFS: Invalid param")
-      return null;
-    }
-    let pathName = path + "/" + name;
-    if (path === "/") pathName = path + name;
-    pathName = pathName.replace(/\//g, "_").substring(1);
-    console.log('Ipfs name: ',pathName);
-    if (pathName !== "") return null;
-
-    try {
-      const formData = new FormData();
-      formData.append("file", pathName);
-      const resFile = await Axios({
-        method: "post",
-        url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
-        data: formData,
-        headers: {
-          'pinata_api_key': pinataKey,
-          'pinata_secret_api_key': pinataSecretKey,
-          "Content-Type": "multipart/form-data"
-        },
-      });
-      console.log('CID: ',resFile.data.IpfsHash);
-      return resFile.data.IpfsHash;
-    } catch (error) {
-      console.error("Error sending File to IPFS: ", error)
-      return null;
     }
   }
 
@@ -559,7 +538,9 @@ const Explorer = () => {
 
   async function treeSelectItem(id, path) {
     console.log('[treeSelectItem] id: ', id);
+    console.log('[treeSelectItem] path: ', path);
     setTreeSelectedItem(id);
+    setSelectedPath(path);
     refreshList(path);
   }
 
@@ -567,6 +548,7 @@ const Explorer = () => {
   async function refreshList(path) {
     //console.log('refreshList');
     let diskResult = await diskClass.longListDir(path);
+    if(diskResult === null) return null;
     setFileList([...diskResult].sort(sortFunction));
     refreshPath(path);
   }
@@ -585,6 +567,7 @@ const Explorer = () => {
     //console.log('-- loadFolderList --');
     //console.log('path: ',path);
     let diskResult = await diskClass.longListDir(path);
+    if(diskResult === null) return null;
     diskResult = [...diskResult].sort(sortFunction);
     //console.log('diskResult: ', diskResult);
     if(diskResult.lentgh) return null;
@@ -693,7 +676,7 @@ const Explorer = () => {
         <div className="Explorer-menu-button" onClick={() => btnRefresh()}><img src={refreshIcon} alt="" className="Explorer-menu-icon"></img><span>Refresh</span></div>
         <div className="Explorer-menu-textDir"><img src={folderIcon} alt="" style={{ marginRight: "5px", height: "16px" }}></img><span id="menuPath">Disk [{truncAddress(addressDisk, 6, 4, '....') + ']:' + pathBarText}</span></div>
         <div className="Explorer-menu-button" onClick={() => btnDiskProperties()} style={{ padding: "0px", marginLeft: "5px" }}><img src={diskIcon} style={{ marginLeft: "5px" }} alt="Disk properties" title="Disk properties" className="Explorer-menu-icon"></img></div>
-        <div className="Explorer-menu-button" onClick={() => disconnect}><img src={logoutIcon} alt="" className="Explorer-menu-icon"></img><span>Logout</span></div>
+        <div className="Explorer-menu-button" onClick={() => btnDisconnect()}><img src={logoutIcon} alt="" className="Explorer-menu-icon"></img><span>Logout</span></div>
       </div>
 
       <div id="view" className="Explorer-view">
@@ -759,7 +742,7 @@ const Explorer = () => {
         networkName={signer === undefined? "":signer.provider._network.name}
       >
       </ModalDiskProperties>
-      <a id="downloadLink" style={{display: "none"}} href="http://">Download</a>
+      <a id="downloadLink" style={{display: "none"}} href="http://" target="_blank" rel="noreferrer">Download</a>
     </div>
   );
 };

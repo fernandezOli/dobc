@@ -102,14 +102,12 @@ class diskClass {
 
 	/// @notice get max data size for storage on blockchain.
 	async getBlocSize() {
-		//console.log('get mutable status of disk ...');
 		if (!this.checkVar()) return null;
 		try {
 			//const signer = this._provider.getSigner();
 			const contract = new ethers.Contract(this._diskContractAddress, diskAbi, this._signer);
 			const result = await contract.blocSize();
-			//console.log('getBlocSize: ', result._hex);
-			return parseInt(result._hex);
+			return parseInt(result);
 		}
 		catch(error) {
 			console.error('[getBlocSize] error: ', error);

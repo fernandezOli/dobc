@@ -62,7 +62,9 @@
 }
 
 .modal_text_left {
-	flex: 1;
+	/*flex: 1;*/
+	margin-right: 0px;
+
 }
 
 .modal_text_right {
@@ -116,7 +118,7 @@
 	/*border-radius: 10px;*/
 	border: 1px solid black;
 	/*max-width: 500px;*/
-	min-width: 300px;
+	min-width: 350px;
 	width: auto;
 	display: block;
 	height: auto;

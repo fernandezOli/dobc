@@ -70,6 +70,11 @@ Create a `.env` file with your own keys for filecoin
 Disk: 0x0717EFFC74974f5a63C58923CE7C9f29cA914C2a
 DiskRegistry: 0x57399e219E57866e8B106e6cBd8af3b36CB86420
 
+### Sepolia Testnet
+
+Disk: 0x57399e219E57866e8B106e6cBd8af3b36CB86420
+DiskRegistry: 0x4Bc81D37d5EE89c4186aF81d438B0a9AF34BD5c6
+
 ### Auto deploy
 
 ```shell

@@ -43,6 +43,10 @@ class DiskRegistryClass {
 			return transaction;
 		}
 		catch(error) {
+			if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+				console.log("Transaction denied by user");
+				return null;
+			}
 			console.error('[diskCreate] error: ', error);
 		}
 		return null;
