@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity 0.8.25;
 
 /// @title contract for registry to create Disk on Blockchain
 /// @author Olivier Fernandez

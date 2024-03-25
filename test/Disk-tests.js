@@ -121,7 +121,7 @@ describe("**** Disk ****", function () {
     it("check gas cost", async function () {
       let content = Buffer.alloc(4 * 1024,'a');
       //console.log("content.length: ", Uint8Array.from(content).length);
-      await Disk.createFile("/","test_4k.txt", "application/binary",0,Uint8Array.from(content));
+      await Disk.createFile("/","test_4k.txt", "application/binary",0,Uint8Array.from(content), { gasLimit: 30000000 });
 
       // bug: 32000 = 31,199,576 / 16000 = 30,111,640 without { gasLimit: 30000000 }
       /*

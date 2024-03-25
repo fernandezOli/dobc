@@ -18,41 +18,39 @@ const ModalUrlFile = ({ isUrlFileShowing, cancelFunc, validFunc, textUrlFile }) 
 				  	<span style={{marginLeft: "5px"}}>Create Url File</span>
 				  </div>
 				</div>
-				<div className="modal_body">
-					<div>
+				<div className="modal_body" style={{ display: "flex" }}>
+					<div className="modal_text_left">
+						<div className="modal_text">Path:</div>
+						<div className="modal_text">Name:</div>
+						<div className="modal_text">Link:</div>
+					</div>
+					<div className="modal_text_right" style={{ paddingLeft: "10px" }}>
+						<div className="modal_text" id="UrlFilePath">{textUrlFile}</div>
 						<div className="modal_text">
-							<div className="modal_text_left">Path:</div>
-							<div className="modal_text_right" id="UrlFilePath">{textUrlFile}</div>
+							<input className="form-control nftInput"
+								id="UrlFileName"
+								placeholder="Name of new file"
+								value={inputName}
+								onChange={(e) => { setInputName(e.target.value); }}
+								style={{ width: "100%" }}
+							/>
 						</div>
 						<div className="modal_text">
-							<div className="modal_text_left">Name:</div>
-							<div className="modal_text_right">
-								<input className="form-control nftInput"
-                        			id="UrlFileName"
-                        			placeholder="Name of new file"
-									value={inputName}
-									onChange={(e) => { setInputName (e.target.value); }}
-								/>
-							</div>
+							<input className="form-control nftInput"
+								id="UrlFileLink"
+								placeholder="web3 storage link"
+								value={inputLink}
+								onChange={(e) => { setInputLink(e.target.value); }}
+								style={{ width: "100%" }}
+							/>
 						</div>
-						<div className="modal_text">
-							<div className="modal_text_left">Link:</div>
-							<div className="modal_text_right">
-								<input className="form-control nftInput"
-                        			id="UrlFileLink"
-                        			placeholder="web3 storage link"
-									value={inputLink}
-									onChange={(e) => { setInputLink (e.target.value); }}
-								/>
-							</div>
-						</div>
+					</div>
 					</div>
 					<div className="modal_div_button">
 						<button className="App-button" onClick={cancelFunc}>Cancel</button>
 						<button className="App-button" onClick={() => {validFunc(textUrlFile, inputName, inputLink);setInputName("");setInputLink("");}} disabled={(inputName.length === 0 || inputLink.length === 0) ? true : ""}>Create</button>
 					</div>
 				</div>
-			  </div>
 			</div>
 		  </div>
 		</>,

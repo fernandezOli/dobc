@@ -6,7 +6,7 @@ const UseModalDiskProperties = () => {
 	const [ownerDiskProperties, setText] = useState("");
 	const [versionDiskProperties, setVersionDiskProperties] = useState("");
 	const [immutableDiskProperties, setImmutableDiskProperties] = useState("");
-	const [blocSizeDiskProperties, setBlocSizeDiskProperties] = useState(0);
+	const [blocSizeDiskProperties, setBlocSizeDiskProperties] = useState(4096);
 
 	function toggleDiskProperties() {
 		setIsDiskPropertiesShowing(!isDiskPropertiesShowing);

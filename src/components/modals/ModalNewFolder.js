@@ -30,6 +30,7 @@ const ModalNewFolder = ({ isNewFolderShowing, cancelFunc, validFunc, folderPath 
 								placeholder="New folder name"
 								value={currentInput}
 								onChange={(e) => { setCurrentInput(e.target.value); }}
+								style={{width: "100%"}}
 							/>
 						</div>
 					</div>
