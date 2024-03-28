@@ -4,7 +4,9 @@ import { ethers } from 'ethers';
 //import { useNavigate } from "react-router-dom";
 //import { Axios } from "axios";
 import { useAccount, useSigner, /*useDisconnect/*, useProvider*/ } from 'wagmi';
+
 import { PinataUploadToIPFS } from "./PinataUpload";
+//import { FilecoinUploadToIPFS } from "./FilecoinUpload";
 
 import { NETWORK_ID_SYMBOL, REGISTRY_ADDR } from '../config/config'
 import { truncAddress, amountCent/*, sleep*/ } from './Tools';
@@ -445,7 +447,8 @@ const Explorer = () => {
       try {
         loaderStart("Sending file to ipfs, Please wait ...");
         const ipfsCID = await PinataUploadToIPFS(fileUploadPointer, address, name, apiKey, secretKey);
-        //const ipfsCID = await FilecoinUploadToIPFS(fileUploadPointer, signer)
+        //const ipfsCID = await FilecoinUploadToIPFS(fileUploadPointer, signer);
+        //const ipfsCID = await FilecoinUploadToIPFS(fileUploadPointer, secretKey);
         loaderStop();
         if (ipfsCID === null) {
           showInfoModal("ERROR", "ERROR", 'Error sending file to IPFS (check your key and password)');
@@ -474,7 +477,7 @@ const Explorer = () => {
     //console.log('UploadCallback: ', fileUploadPointer.type);
     const reader = new FileReader();
     //reader.readAsText(fileUploadPointer, 'UTF-8');
-    reader.readAsArrayBuffer(fileUploadPointer);
+    //reader.readAsArrayBuffer(fileUploadPointer);
     reader.onload = async readerEvent => {
       try {
         const content = readerEvent.target.result;
@@ -497,6 +500,7 @@ const Explorer = () => {
         return;
       }
     }
+    reader.readAsArrayBuffer(fileUploadPointer);
   }
 
   async function btnProperties() {
@@ -624,12 +628,14 @@ const Explorer = () => {
     //diskResult = await diskClass.createFile(path, name, attributs, type, data);
     if (type === 0) {
       console.log('data: ',data);
-      console.log('data: ', new Uint8Array(data));
-      console.log('text utf8: ', ethers.utils.toUtf8Bytes("test data"));
-      //console.log('data: ', Uint8Array.from(data));
-      console.log('attributs: ',attributs);
-      //diskResult = false;
-      diskResult = await diskClass.createFileBinary(path, name, attributs, data);
+      console.log('data (Uint8Array) : ', new Uint8Array(data));
+      //console.log('text utf8: ', ethers.utils.toUtf8Bytes(data));
+      //console.log('data.toString: ', String.fromCharCode.apply(null, new Uint8Array(data)));
+      console.log('data text utf8: ', ethers.utils.toUtf8Bytes(String.fromCharCode.apply(null, new Uint8Array(data))));
+      //console.log('attributs: ',attributs);
+      diskResult = false;
+      //diskResult = await diskClass.createFileBinary(path, name, attributs, data);
+      //diskResult = await diskClass.createFileUrl(path, name, attributs, data);
     }
     else diskResult = await diskClass.createFileUrl(path, name, attributs, data);
     if (diskResult === false) {

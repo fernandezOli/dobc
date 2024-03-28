@@ -10,9 +10,7 @@ A decentralized storage solution based on Blockchain and ipfs, for security, dat
 
 you can access your disc in several ways:
 - with the UX on web (see live demo)
-- with the API just like another web link (comming son)
-- from your own UX with javascript class (comming son)
-- from another contract with solidity libraries (comming son)
+- from another contract
 
 
 ## Install
@@ -21,15 +19,13 @@ you can access your disc in several ways:
 npm i
 ```
 
-## Test
+## Test contracts
 
 ```shell
 npx hardhat test
 ```
 
 ## Run
-
-Create a `.env` file with your own keys and:
 
 ```shell
 npm start
@@ -39,15 +35,13 @@ npm start
 ### Install for web disk
 
 You can install the explorer local and use a disk on blockchain. Just run, change nothing.
-The explorer use default configuration on network goerli.
+The explorer use default configuration on network sepolia.
 **config/config.js**
 ```
-export const ETH_CHAINS = [goerli];
-export const NETWORK_ID_SYMBOL = "ETH";
-export const REGISTRY_ADDR = '0x57399e219E57866e8B106e6cBd8af3b36CB86420';
+export const ETH_CHAINS = [sepolia];
+export const NETWORK_ID_SYMBOL = "SEP";
+export const REGISTRY_ADDR = '0x4Bc81D37d5EE89c4186aF81d438B0a9AF34BD5c6';
 ```
-
-Create a `.env` file with your own keys for filecoin
 
 ### Install for local disk
 
@@ -60,28 +54,12 @@ export const NETWORK_ID_SYMBOL = "GETH";
 export const REGISTRY_ADDR = '<registry_address_on_ganache>';
 ```
 
-Create a `.env` file with your own keys for filecoin
-
-
 ## Deploy
-
-### Goerli Testnet
-
-Disk: 0x0717EFFC74974f5a63C58923CE7C9f29cA914C2a
-DiskRegistry: 0x57399e219E57866e8B106e6cBd8af3b36CB86420
 
 ### Sepolia Testnet
 
 Disk: 0x57399e219E57866e8B106e6cBd8af3b36CB86420
 DiskRegistry: 0x4Bc81D37d5EE89c4186aF81d438B0a9AF34BD5c6
-
-### Auto deploy
-
-```shell
-npx hardhat run scripts/deploy.js --network localhost
-```
-| The disk and registry address are save in src/config. |
-| --- |
 
 ### Manual deploy
 
@@ -89,7 +67,7 @@ npx hardhat run scripts/deploy.js --network localhost
 - deploy registry contract
 - set the address of disk contract to the registry adddress with setDiskContractAddress(<disk_address>)
 
-| :warning: Don't forget to copy your registry address in the explorer ! |
+| :warning: Don't forget to copy your registry address in the config/config.js ! |
 | --- |
 
 
@@ -103,6 +81,7 @@ If you want to update the disk contract, deploy the new contract disk and set th
 
 ## Technologies use
 
+	- solidity (0.8.25)
     - wagmi
     - connectkit
     - react-accessible-treeview
