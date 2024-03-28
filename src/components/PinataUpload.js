@@ -1,14 +1,15 @@
-//import { pinFileToIPFSurl } from '../config/constants';
-//import { pinataAPIkey, pinataAPIsecret } from '../config/pinata.config';
-
-const axios = require('axios');
+import axios from "axios";
 const FormData = require('form-data');
 
-export const pinFileToIPFSurl = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-//export const pinataAPIkey = process.env.REACT_APP_PINATA_API_KEY;
-//export const pinataAPIsecret = process.env.REACT_APP_PINATA_API_SECRET;
+const pinFileToIPFSurl = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
-
+/// @notice Upload file to ipfs with Pinata
+/// @param fileUpload pointer to file
+/// @param ownerAddress owner address
+/// @param fileName name of file
+/// @param pinataAPIkey pinata key
+/// @param pinataAPIsecret pinata secret key
+/// @return CID of file on ipfs, null on error
 export const PinataUploadToIPFS = async (fileUpload, ownerAddress, fileName, pinataAPIkey, pinataAPIsecret) => {
   //Create formData and add file
   let data = new FormData();
@@ -38,10 +39,10 @@ export const PinataUploadToIPFS = async (fileUpload, ownerAddress, fileName, pin
         pinata_secret_api_key: pinataAPIsecret,
       },
     });
-    console.log('CID: ',resFile.data.IpfsHash);
+    //console.log('CID: ',resFile.data.IpfsHash);
     return resFile.data.IpfsHash;
   } catch (error) {
-    console.error("Error sending File to IPFS: ", error)
+    console.error("Error sending File to IPFS: ", error.message); //Request failed with status code 403
     return null;
   }
 };

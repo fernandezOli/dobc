@@ -79,20 +79,20 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 							</div>
 							<div style={{marginBottom: "5px"}}>
 								<input type="radio" id="onipfs" name="storage" value="1" defaultChecked={(fileSize <= maxBlocSize) ? false : true}/>
-								<label htmlFor="onipfs"> On ipfs (with Filecoin)</label>
+								<label htmlFor="onipfs"> On ipfs (with Pinata)</label>
 								<div>
-									<div><span style={{marginLeft: "30px"}}>Filecoin api key:</span>
+									<div><span style={{marginLeft: "30px"}}>Api key:</span>
 										<div><input className="modal_upload_input_key"
 											id="inputApiKey"
-											placeholder="Your Filecoin api key"
+											placeholder="Your Pinata api key"
 											value={ApiKey}
 											onChange={(e) => { setApiKey(e.target.value); }}
 										/></div>
 									</div>
-									<div><span style={{marginLeft: "30px"}}>Filecoin secret key:</span>
+									<div><span style={{marginLeft: "30px"}}>Secret key:</span>
 										<div><input className="modal_upload_input_key"
 											id="inputSecretKey"
-											placeholder="Your Filecoin secret key"
+											placeholder="Your Pinata secret key"
 											value={SecretApiKey}
 											onChange={(e) => { setSecretApiKey(e.target.value); }}
 										/></div>

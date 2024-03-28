@@ -157,11 +157,9 @@ class diskClass {
 		//console.log('create sub-directory in directory ...');
 		if (!this.checkVar()) return false;
 		try {
-			//loaderStart("waiting transaction ...");
 			//const gas = (3000000000 * 2) / 1000000000; //await getGasPrices();
 			//const fastGasPrice = Math.trunc(gas * 1000000000);
 			//console.log('fastGasPrice: ' + fastGasPrice);
-			//const signer = this._provider.getSigner();
 			const contract = new ethers.Contract(this._diskContractAddress, diskAbi, this._signer);
 			const transaction = await contract.createDir(path, name); //, { gasPrice: fastGasPrice }
 			console.log('waiting transaction ...');
@@ -171,9 +169,6 @@ class diskClass {
 			const lastest = await this._provider.getBlock('latest');
 			//console.log("latest: ", lastest.number);
 			if(this._transactionConfirmation) await this.confirmTransaction(this._provider, lastest.number + 1, 1);
-			//await sleep(5000);
-			//console.log("createDir successfull !!");
-			//loaderStop();
 			return true;
 
 		} catch (error) {
@@ -236,7 +231,7 @@ class diskClass {
 
 	/// @notice shortcut for create a binary file.
 	async createFileBinary(path, name, attributs, data) {
-		return await this.createFile(path, name, attributs, 0, new Uint8Array(data)); //Uint8Array.from(content)
+		return await this.createFile(path, name, attributs, 0, new Uint8Array(data));
 	}
 
 	/// @notice create a file.
@@ -247,9 +242,8 @@ class diskClass {
 			//const gas = (3000000000 * 2) / 1000000000; //await getGasPrices();
 			//const fastGasPrice = Math.trunc(gas * 1000000000);
 			//console.log('fastGasPrice: ' + fastGasPrice);
-			//const signer = this._provider.getSigner();
 			const contract = new ethers.Contract(this._diskContractAddress, diskAbi, this._signer);
-			const transaction = await contract.createFile(path, name, attributs, content_type, data); //, { gasPrice: fastGasPrice }
+			const transaction = await contract.createFile(path, name, attributs, content_type, data, { gasLimit: 30000000 }); //, { gasPrice: fastGasPrice }
 			console.log('waiting transaction ...');
 			//console.log("transaction: ", transaction);
 			/*const waitTransaction =*/ await this._provider.waitForTransaction(transaction.hash);
@@ -257,8 +251,6 @@ class diskClass {
 			const lastest = await this._provider.getBlock('latest');
 			//console.log("latest: ", lastest.number);
 			if(this._transactionConfirmation) await this.confirmTransaction(this._provider, lastest.number + 1, 1);
-			//await sleep(5000);
-			//console.log("createFile successfull !!");
 			return true;
 
 		} catch (error) {

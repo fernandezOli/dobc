@@ -301,7 +301,7 @@ const Explorer = () => {
 
   async function btnNewFolder() {
     //console.log('-- btnNewFolder --');
-    showNewFolderModal('/');
+    showNewFolderModal(selectedPath);
   }
 
   /* new folder callback */
@@ -443,30 +443,24 @@ const Explorer = () => {
         return;
       }
       try {
-        // waiting...
         loaderStart("Sending file to ipfs, Please wait ...");
-        //https://dev.to/fidalmathew/send-files-to-ipfs-using-pinata-api-in-reactjs-3c3
         const ipfsCID = await PinataUploadToIPFS(fileUploadPointer, address, name, apiKey, secretKey);
         //const ipfsCID = await FilecoinUploadToIPFS(fileUploadPointer, signer)
         loaderStop();
         if (ipfsCID === null) {
-          showInfoModal("ERROR", "ERROR", 'Error sending file to IPFS');
+          showInfoModal("ERROR", "ERROR", 'Error sending file to IPFS (check your key and password)');
           return;
         }
-        showInfoModal("SUCCESS", "SUCCESS", 'File uploaded succefully');
-        //https://ipfs.io/ipfs/QmcfHNjvpjXLBjEnbj985RvT9zCYkdYS4djBr9V6h7TP6i
-        /*
-        //UrlFileCallback(path, name, "https://ipfs.io/ipfs/" + ipfsCID);
+        //showInfoModal("SUCCESS", "SUCCESS", 'File uploaded succefully');
+        console.log('ipfs CID: ', ipfsCID)
         loaderStart("Sending url to blockchain, Please wait ...");
-        const result = await sendDataToBlockchain(path, name, "attributs", "https://ipfs.io/ipfs/" + ipfsCID, 1);
+        const result = await sendDataToBlockchain(path, name, "{ type: '" + fileUploadPointer.type + "'}", "https://ipfs.io/ipfs/" + ipfsCID, 1);
         loaderStop();
         if (result) {
           refreshList(path);
           showInfoModal("SUCCESS", "SUCCESS", 'File uploaded succefully');
         }
         else showInfoModal("ERROR", "ERROR", 'Error sending data to blockchain !');
-        return;
-        */
         return;
       }
       catch (e) {
@@ -484,9 +478,6 @@ const Explorer = () => {
     reader.onload = async readerEvent => {
       try {
         const content = readerEvent.target.result;
-        //document.getElementById("signature").value = window.atob(content);
-        //console.log('UploadCallback: ', content); //ArrayBuffer
-        //console.log('UploadCallback: ', new Uint8Array(content)); //ArrayBuffer to bytes
         if (content.byteLength === 0) {
           showInfoModal("ERROR", "ERROR", 'Empty content !');
           return;
@@ -521,8 +512,7 @@ const Explorer = () => {
 
   async function btnRefresh() {
     //console.log('-- btnRefresh --');
-    let path = "/";
-    refreshList(path);
+    refreshList(selectedPath);
   }
 
   //**** functions ****
@@ -554,12 +544,12 @@ const Explorer = () => {
   }
 
 	function sortFunction(a, b) {
-		if (parseInt(a.content_type._hex) === 1) { // a = folder
-      if (parseInt(b.content_type._hex) !== 1) return -1;
+		if (parseInt(a.content_type) === 1) { // a = folder
+      if (parseInt(b.content_type) !== 1) return -1;
 			return a.name.localeCompare(b.name);
 		}
     // a = file
-    if (parseInt(b.content_type._hex) === 1) return 1;
+    if (parseInt(b.content_type) === 1) return 1; // b = folder
 		return a.name.localeCompare(b.name);
 	}
 
@@ -621,22 +611,30 @@ const Explorer = () => {
     console.log('create File: ', pathName);
     diskResult = await diskClass.existFile(pathName);
     if (diskResult === null) {
-      showInfoModal("ERROR", "ERROR", 'File test existence error !');
+      //showInfoModal("ERROR", "ERROR", 'File test existence error !');
       return false;
     }
     if (diskResult) {
-      showInfoModal("ERROR", "ERROR", 'File already exist !');
+      //showInfoModal("ERROR", "ERROR", 'File already exist !');
       return false;
     }
 
     // create file
     loaderStart("Waiting transaction, Please wait ...");
     //diskResult = await diskClass.createFile(path, name, attributs, type, data);
-    //diskResult = await diskClass.createFileBinary(path, name, attributs, data);
-    diskResult = await diskClass.createFileUrl(path, name, attributs, data);
+    if (type === 0) {
+      console.log('data: ',data);
+      console.log('data: ', new Uint8Array(data));
+      console.log('text utf8: ', ethers.utils.toUtf8Bytes("test data"));
+      //console.log('data: ', Uint8Array.from(data));
+      console.log('attributs: ',attributs);
+      //diskResult = false;
+      diskResult = await diskClass.createFileBinary(path, name, attributs, data);
+    }
+    else diskResult = await diskClass.createFileUrl(path, name, attributs, data);
     if (diskResult === false) {
       loaderStop();
-      showInfoModal("ERROR", "ERROR", 'Create file error !');
+      //showInfoModal("ERROR", "ERROR", 'Create file error !');
       return false;
     }
 
@@ -644,11 +642,11 @@ const Explorer = () => {
     diskResult = await diskClass.existFile(pathName);
     loaderStop();
     if (diskResult === null) {
-      showInfoModal("ERROR", "ERROR", 'file test existence error !');
+      //showInfoModal("ERROR", "ERROR", 'file test existence error !');
       return false;
     }
     if (!diskResult) {
-      showInfoModal("ERROR", "ERROR", 'file not created !');
+      //showInfoModal("ERROR", "ERROR", 'file not created !');
       return false;
     }
     return true;
