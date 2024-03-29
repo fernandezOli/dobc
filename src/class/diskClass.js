@@ -201,18 +201,11 @@ class diskClass {
 
 	infoFile(/*string memory _name*/) {}
 
-	/// @notice shortcut for read a url file.
-	async readFileUrl(fileName) {
-		const data = await this.readFile(fileName);
-		return ethers.utils.toUtf8String(data); //console.log(Buffer.from(fileData.substr(2) , "hex"));
-	}
-
 	/// @notice return the content of a file.
 	async readFile(fileName) {
 		//console.log('Read the content of a file ...');
 		if (!this.checkVar()) return null;
 		try {
-			//const signer = this._provider.getSigner();
 			const contract = new ethers.Contract(this._diskContractAddress, diskAbi, this._signer);
 			const result = await contract.readFile(fileName);
 			//console.log('readFile: ', result);
@@ -243,7 +236,7 @@ class diskClass {
 			//const fastGasPrice = Math.trunc(gas * 1000000000);
 			//console.log('fastGasPrice: ' + fastGasPrice);
 			const contract = new ethers.Contract(this._diskContractAddress, diskAbi, this._signer);
-			const transaction = await contract.createFile(path, name, attributs, content_type, data, { gasLimit: 30000000 }); //, { gasPrice: fastGasPrice }
+			const transaction = await contract.createFile(path, name, attributs, content_type, data /*, { gasLimit: 30000000 }*/); //, { gasPrice: fastGasPrice }
 			console.log('waiting transaction ...');
 			//console.log("transaction: ", transaction);
 			/*const waitTransaction =*/ await this._provider.waitForTransaction(transaction.hash);

@@ -399,20 +399,45 @@ const Explorer = () => {
     //console.log("[showPropertiesModal] data UTF: ", ethers.utils.toUtf8String(dataFile));
     //console.log("link:" + ethers.utils.toUtf8String(dataFile));
 
-    try {
-      const fileName = (selectedPath === '/'?"/" + fileEntry.name:selectedPath + "/" + fileEntry.name);
-      const dataFile = await diskClass.readFile(fileName);
-			//var blob = new Blob([ethers.utils.toUtf8String(dataFile)], { type: 'application/octet-binary' });
-			//let url = window.URL.createObjectURL(blob);
-      let url = ethers.utils.toUtf8String(dataFile);
-			let a = document.getElementById("downloadLink");
-			a.href = url;
-			a.download = fileEntry.name;
-			a.click();
-			window.URL.revokeObjectURL(url);
-    } catch(error) {
-      showInfoModal("ERROR", "ERROR", 'Error downloading file');
-      console.error('[btnDownload] error: ', error);
+    const fileName = (selectedPath === '/' ? "/" + fileEntry.name : selectedPath + "/" + fileEntry.name);
+    if (fileEntry.content_type === 3) {
+      try {
+        const dataFile = await diskClass.readFile(fileName);
+        if (dataFile === null) {
+          showInfoModal("ERROR", "ERROR", 'Error downloading file');
+          return;
+        }
+        let url = ethers.utils.toUtf8String(dataFile);
+        let a = document.getElementById("downloadLink");
+        a.href = url;
+        a.download = fileEntry.name;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        showInfoModal("ERROR", "ERROR", 'Error downloading file');
+        console.error('[btnDownload] error: ', error);
+      }
+      return;
+    }
+    if (fileEntry.content_type === 2) {
+      try {
+        const dataFile = await diskClass.readFile(fileName);
+        if (dataFile === null) {
+          showInfoModal("ERROR", "ERROR", 'Error downloading file');
+          return;
+        }
+        var blob = new Blob([ethers.utils.toUtf8String(dataFile)]/*, { type: 'application/octet-stream' }*/); //application/octet-binary
+        let url = window.URL.createObjectURL(blob);
+        let a = document.getElementById("downloadLink");
+        a.href = url;
+        a.download = fileEntry.name;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        showInfoModal("ERROR", "ERROR", 'Error downloading file');
+        console.error('[btnDownload] error: ', error);
+      }
+      return;
     }
   }
 
@@ -627,15 +652,11 @@ const Explorer = () => {
     loaderStart("Waiting transaction, Please wait ...");
     //diskResult = await diskClass.createFile(path, name, attributs, type, data);
     if (type === 0) {
-      console.log('data: ',data);
-      console.log('data (Uint8Array) : ', new Uint8Array(data));
-      //console.log('text utf8: ', ethers.utils.toUtf8Bytes(data));
-      //console.log('data.toString: ', String.fromCharCode.apply(null, new Uint8Array(data)));
-      console.log('data text utf8: ', ethers.utils.toUtf8Bytes(String.fromCharCode.apply(null, new Uint8Array(data))));
-      //console.log('attributs: ',attributs);
-      diskResult = false;
-      //diskResult = await diskClass.createFileBinary(path, name, attributs, data);
-      //diskResult = await diskClass.createFileUrl(path, name, attributs, data);
+      //console.log('data: ',data);
+      //console.log('data (Uint8Array) : ', new Uint8Array(data));
+      //console.log('data text utf8: ', ethers.utils.toUtf8Bytes(String.fromCharCode.apply(null, new Uint8Array(data))));
+      //diskResult = false;
+      diskResult = await diskClass.createFileBinary(path, name, attributs, data);
     }
     else diskResult = await diskClass.createFileUrl(path, name, attributs, data);
     if (diskResult === false) {

@@ -19,16 +19,16 @@ you can access your disc in several ways:
 npm i
 ```
 
-## Test contracts
-
-```shell
-npx hardhat test
-```
-
 ## Run
 
 ```shell
 npm start
+```
+
+## Test contracts
+
+```shell
+npx hardhat test
 ```
 
 
