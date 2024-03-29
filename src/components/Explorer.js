@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { React, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import { Axios } from "axios";
 import { useAccount, useSigner, /*useDisconnect/*, useProvider*/ } from 'wagmi';
 
@@ -73,7 +73,7 @@ const Explorer = () => {
 
   const contentType = ["unknown", "folder", "binary file", "url file"];
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   //const { disconnect } = useDisconnect();
   //return <button onClick={disconnect}>Disconnect</button>;
   const { address/*, isConnecting, isDisconnected*/ } = useAccount();
@@ -272,8 +272,9 @@ const Explorer = () => {
     console.log('-- btnDisconnect --');
     //await authInfos._connectWallet();
     //disconnect();
-    //navigate("/", { replace: true });
-    window.location.reload();
+    navigate("/", { replace: true });
+    //navigate("/explorer", { replace: true });
+    //window.location.reload();
   }
 
   /* create disk callback */
