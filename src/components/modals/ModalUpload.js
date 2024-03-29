@@ -20,8 +20,12 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 		//console.log('loadKey: ', e.target.files[0]);
 		setFilePointer(file);
 		setInputName(file.name);
-		//console.log('loadKey: ', file.size);
 		setFileSize(file.size);
+		if (file.size > maxBlocSize) {
+			document.getElementById("onchain").checked = false;
+			document.getElementById("onchain").disabled = true;
+			document.getElementById("onipfs").checked = true;
+		}
 	}
 
 	function validCallback() {
@@ -71,14 +75,14 @@ const ModalUpload = ({ isUploadShowing, cancelFunc, validFunc, pathUpload, maxBl
 						</div>
 						<div className="modal_text modal_upload_storage">
 							<div style={{marginBottom: "5px"}}>
-								<input type="radio" id="onchain" name="storage" value="0" defaultChecked={(fileSize <= maxBlocSize) ? true : false}/>
+								<input type="radio" id="onchain" name="storage" value="0" defaultChecked="true"/>
 								<label className={(fileSize <= maxBlocSize) ? "" : "modal_upload_label_disabled"} htmlFor="onchain"> On blockchain</label>
 								{/*<div className={(fileSize < maxBlocSize) ? "" : "modal_upload_div_none"}>
 									<span style={{marginLeft: "30px"}}>Cost</span>
 								</div>*/}
 							</div>
 							<div style={{marginBottom: "5px"}}>
-								<input type="radio" id="onipfs" name="storage" value="1" defaultChecked={(fileSize <= maxBlocSize) ? false : true}/>
+								<input type="radio" id="onipfs" name="storage" value="1"/>
 								<label htmlFor="onipfs"> On ipfs (with Pinata)</label>
 								<div>
 									<div><span style={{marginLeft: "30px"}}>Api key:</span>
