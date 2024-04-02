@@ -17,7 +17,8 @@ isLoginShowing
 				  	<span style={{marginLeft: "5px"}}>Login</span>
 				  </div>
 				</div>
-				<div className="modal_body">
+				<div className="modal_body" style={{textAlign: "center"}}>
+					<p>Welcome to Web3dd on Sepolia network</p>
 					<p>Login to use your disk or create one</p>
 					<div className="modal_div_button">
 						<LoginButton />
